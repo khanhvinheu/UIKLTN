@@ -1,0 +1,50 @@
+<div class="wrapper_cart d-flex mx-auto">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-12 p-0">
+                <div class="wrapper_left border border-khoi rounded my-3" style="min-height: 30rem">
+                    <div class="col-12 py-2 row_cart">
+                        <span class="title font-weight-bold">Giỏ hàng <small class="count_cart_small">(Có
+                                {{counts }} sản phẩm)</small>
+                        </span>
+                        <button (click)="onRemoveCart()"
+                            class="float-right color-khoi2 btn btn-outline-light btn-default fa fa-trash" style="margin: -8px;">
+                        </button>
+                    </div>
+                    <div class="box_row_cart">
+                        <ng-container *ngFor="let item of carts">
+                            <app-row-giohang [item]=item></app-row-giohang>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 pl-lg-3 sticky_bot p-0" style="position: sticky;bottom: 0;z-index: 999;left:0">
+                <div class="wrapper_right border border-khoi bg-khoi3 rounded my-md-3 p-3 ">
+                    <div class="col-lg-12 d-md-flex d-none ">
+                        <span class=" font-weight-bold">Thành tiền:</span>
+                        <span class="ml-auto font-weight-bold total_cart_small">
+                            {{loadthanhtien() | currency:'VND':'symbol'}}
+                        </span>
+                    </div>
+                    <!-- <div class="col-lg-12 d-md-flex d-none ">
+                        <span class=" font-weight-bold">Phí giao hàng:</span>
+                        <span class="ml-auto font-weight-bold total_cart_small">
+                            {{15000 | currency:'VND':'symbol'}}
+                        </span>
+                    </div> -->
+                    <div class="d-none d-lg-block">
+                        <hr>
+                    </div>
+                    <div class="col-12 d-flex ">
+                        <span style="font-size: 1.4rem">Tổng tiền:</span>
+                        <span class="ml-auto text-danger font-weight-bold total_cart_biger"
+                            style="font-size: 1.4rem">{{loadthanhtien()  | currency:'VND':'symbol'}}</span>
+                    </div>
+                    <button [disabled]="loadthanhtien() == 0" class=" btn btn-danger p-3 mt-4 w-100"
+                        (click)="handleOrder()">Tiến hành thanh
+                        toán</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

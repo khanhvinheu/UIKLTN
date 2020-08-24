@@ -1,0 +1,93 @@
+<div class="row" >    
+    <div class="col-xs-7 col-sm-7 col-md-6 col-lg-7" [ngStyle]="{'background': 'url(' + api_url + '/upload/other/form-img.jpg) no-repeat 0 0 / cover',
+    'background-size':'100% 100%'}">   
+        <!-- <img style="width: 150%;" src="{{api_url}}/upload/other/form-img.jpg" alt="">      -->        
+    </div>   
+    <div class="col-xs-5 col-sm-5 col-md-6 col-lg-5 " style="padding: 30px; overflow: auto; height: 700px;" >
+        <div class="col-lg-12 p-0 mx-0">
+            <span class="title_sp_lq">ĐĂNG KÝ</span>  
+            <button class="position-absolute" style="right: 0" type="button" class="close"
+            (click)="onNoClick()">&times;</button>
+        </div>
+        <hr>
+        <form [formGroup]="frm" (ngSubmit)="onSubmitForm()" class=" d-flex flex-column">
+            <div class="form-group">
+                <div class="d-flex flex-row justify-content-between">
+                    <label for="email">Tên:</label>
+                    <span [ngClass]="onValidatorTextColor('hoTen')" [innerHTML]="onValidator('hoTen')"></span>
+                </div>
+                <input class="form-control " [ngClass]="onValidatorBorderColor('hoTen')" placeholder="Nhập Tên "
+                    formControlName="hoTen" />
+            </div>
+            <div class="form-group">
+                <div class="d-flex flex-row justify-content-between">
+                    <label for="email">Số điện thoại:</label>
+                    <span [ngClass]="onValidatorTextColor('dienThoai')" [innerHTML]="onValidator('dienThoai')"></span>
+                </div>
+                <input class="form-control " type="number" [ngClass]="onValidatorBorderColor('dienThoai')" placeholder="Nhập số điện thoại "
+                    formControlName="dienThoai" />
+            </div>
+            <div class="form-group">
+                <div class="d-flex flex-row justify-content-between">
+                    <label for="email">Email:</label>
+                    <span [ngClass]="onValidatorTextColor('email')" [innerHTML]="onValidator('email')"></span>
+                </div>
+                <input class="form-control " [ngClass]="onValidatorBorderColor('email')" placeholder="Nhập email "
+                    formControlName="email" type="email"/>
+            </div>           
+            <div class="form-group">
+                <div class="d-flex flex-row justify-content-between">
+                    <label for="pwd">Mật khẩu:</label>
+                    <span [ngClass]="onValidatorTextColor('password')" [innerHTML]="onValidator('password')"></span>
+                </div>
+    
+                <input type="password" formControlName="password" class="form-control" placeholder="Nhập mật khẩu">
+            </div>
+            <div class="form-group">
+                <div class="d-flex flex-row justify-content-between">
+                    <label for="pwd">Nhập lại mật khẩu:</label>
+                    <span [ngClass]="onValidatorTextColor('re_password')" [innerHTML]="onValidator('re_password')"></span>
+                </div>
+    
+                <input type="password" formControlName="re_password" class="form-control" placeholder="Nhập lại mật khẩu">
+            </div>
+            <div class="form-group form-inline ">
+                <!-- <span class="text-lg-right px-0 px-lg-3 col-lg-2 col-12"></span> -->
+                <mat-form-field class=" col-lg-6 col-6">
+                    <mat-label> Tỉnh (TP) </mat-label>
+                    <mat-select [(ngModel)]="tinh" (selectionChange)="onChange($event.value)" formControlName="tinh" >
+                      <!-- <mat-option>None</mat-option> -->
+                      <mat-option  *ngFor="let data of data" [value]="data.name">{{data.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                
+                  <mat-form-field class=" col-lg-6 col-6">
+                    <mat-label> Quận (Huyện) </mat-label>
+                    <mat-select [(ngModel)]="huyensl" formControlName="huyen" (selectionChange)="onChangexa($event.value)" >
+                      <!-- <mat-option >None</mat-option> -->
+                      <mat-option *ngFor="let huyens of huyen" [value]="huyens.name">{{huyens.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field class=" col-lg-12 col-12">
+                    <mat-label> Thị trấn(phường,xa) </mat-label>
+                    <mat-select [(ngModel)]="xasl" formControlName="xa">
+                      <!-- <mat-option >None</mat-option> -->
+                      <mat-option *ngFor="let xas of xa" [value]="xas.prefix+' '+xas.name">{{xas.prefix}} {{xas.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field> 
+                  <mat-form-field class=" col-lg-12 col-12">                                 
+                     <input matInput formControlName="diaChihome" (input)="changeLocation()" [(ngModel)]="diaChihome" placeholder="Nhập: số nhà - ấp">
+                  </mat-form-field> 
+
+                  <mat-form-field class=" col-lg-12 col-12">
+                    <mat-label> Địa chỉ: </mat-label>
+                    <textarea matInput type="text" formControlName="diaChi" value="{{diaChihome}}-{{xasl}}-{{huyensl}}-TP.{{tinh}}" class="col-lg-9 col-12" ></textarea>
+                  </mat-form-field>    
+                                                    
+            </div>
+            <button type="submit" class="btn btn-info align-self-center w-100 "
+                [disabled]="frm.invalid || !reCatcha_status" style="background-color: #dc3545; border-color: #dc3545;">Đăng ký</button>
+        </form>
+    </div>
+    
+</div>

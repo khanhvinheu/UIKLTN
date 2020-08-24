@@ -2,34 +2,30 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TimeAgoPipe } from 'time-ago-pipe';
-
 import { NoSanitizePipe } from '../pipe/no-sanitize.pipe';
 import { TextTruncatePipe } from '../pipe/text-truncate.pipe';
 import { DemoMaterialModule } from '../admin/material-module';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-    declarations: [TextTruncatePipe, TimeAgoPipe, NoSanitizePipe],
+    declarations: [TextTruncatePipe, NoSanitizePipe],
     imports: [
         CommonModule,
         DemoMaterialModule,
         ReactiveFormsModule,
-        FormsModule,
-        NgbModule,
-        RouterModule
+        FormsModule,       
+        RouterModule,
+        NgbModule, 
     ],
-    exports: [
+    exports: [       
         DemoMaterialModule,
         ReactiveFormsModule,
         TextTruncatePipe,
-        FormsModule,
-        TimeAgoPipe,
-        NgbModule,
+        FormsModule,      
         NoSanitizePipe,
         RouterModule,
         CommonModule,
+        NgbModule,        
         
     ]
 })

@@ -1,0 +1,50 @@
+.example-container
+  display: flex
+  flex-direction: column
+  position: absolute
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+
+.example-is-mobile .example-toolbar
+  position: fixed
+  
+  z-index: 2
+
+h1.example-app-name
+  margin-left: 8px
+
+.example-sidenav-container
+ 
+  flex: 1
+
+.example-is-mobile .example-sidenav-container
+ 
+  flex: 1 0 auto
+
+.mat-sidenav
+  min-width: 14rem
+
+.mat-nav-list :hover
+  background: #20a8d8
+
+  i
+    color: white !important
+
+.m_color_primary
+  background: #1976d2 !important
+
+::ng-deep
+  th.mat-header-cell
+    border-right: 1px solid #cdcdcd
+
+    &:last-child
+      border-right: none
+
+  td.mat-cell
+    border-right: 1px solid #cdcdcd
+    padding: 0 0.875rem !important
+
+    &:last-child
+      border-right: none

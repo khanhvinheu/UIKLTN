@@ -1,0 +1,183 @@
+<app-loading></app-loading>
+<div class="container">
+    <div class="row">
+
+        <div class=" col-md-2 col-lg-1 col-12 box_list_hinh flex-row order-2 order-md-1 p-0">
+            <span class="fa fa-angle-up prev d-none d-md-block"></span>
+
+            <ngx-slick-carousel #slickModal="slick-carousel" [config]="slideConfig" class="bg-default">
+                <div ngxSlickItem *ngFor="let item of hinhs">
+                    <div class="p-1">
+                        <span
+                            class="rounded-lg bg-white border-light border d-flex align-items-center my-md-2 mx-md-0 my-0 mx-2 ">
+                            <img src="{{api_url}}/upload/sanpham/{{ item?.hinhAnh }}" (mouseenter)="onChangeHinh(item)"
+                                alt="">
+                        </span>
+                    </div>
+                </div>
+            </ngx-slick-carousel>
+
+            <span class="fa fa-angle-down next mt-2 d-none d-md-block"></span>
+
+        </div>
+        <div class="col-lg-5 col-md-10 col-12 p-5 py-md-0 order-1 order-md-2 d-flex justify-content-center">
+            <div
+                class="img_sanpham text-center px-md-2 py-md-4 px-3 d-flex justify-content-center mx-auto strect_img_chitiet m-auto">
+                <img *ngIf="currentHinh" src="{{api_url}}/upload/sanpham/{{currentHinh }}" class="strect_img_chitiet"
+                    style="object-fit: contain">
+            </div>
+        </div>
+        <div class="col-lg-6 col-12 order-3 px-0">
+            <div class="box_content_chitiet py-5">
+                <div class="px-2">
+                    <h2 class="title_chitiet">{{ product?.tenSanpham |uppercase}}</h2>
+                    <span class="text-secondary mr-2">Nhà cung cấp:</span>
+                    <span class="mr-2">{{ product?.tenNhacungcap  |titlecase}}</span>
+                    <br>
+                    <span class="text-secondary mr-2">Địa Chỉ:</span>
+                        <span class="text-decoration-none 	fa fa-map-marker">
+                            {{ product?.diaChi}}
+                        </span> 
+                    <hr>
+
+                    <ng-container *ngIf="product && product.soLuong === 0; else elseBlock">
+                        <span class="gia_chitiet text-danger d-block">Hết hàng</span>
+                        <div class="d-flex flex-row">
+                            <span class="card_old_cost font_size_0_8"></span>
+                            <span class="card_label_km btn btn-sm btn-danger p-0 font_size_0_8">
+
+                            </span>
+                        </div>
+                    </ng-container>
+                    <ng-template #elseBlock>
+                        <div class="d-flex flex-row rate" *ngIf="product?.chietKhau != null">
+                            <span class="card_old_cost font_size_0_8">Giá gốc: 
+                                {{product?.gia | currency:'VND':'symbol'}}</span>
+                            <span class="card_label_km btn btn-sm btn-danger p-0 font_size_0_8">
+                                -{{ (product?.chietKhau) | number:'1.0-1' }}%
+                            </span>                            
+                        </div>
+                        <span class="gia_chitiet text-danger d-block">
+                            {{ product?.gia - product?.gia * product?.chietKhau /100  | currency:'VND':'symbol'}}
+                        </span>
+                    </ng-template>
+
+                         
+
+                    <hr>
+                    <div class="col-lg-12 d-md-flex d-none">
+                        <div class="row">
+                            <div class="col-md-3 p-0 col-5">
+                                <span class="text-left" style="line-height: 38px"> Số lượng:
+                                </span>
+                            </div>
+                            <div class="input-group col-md-4 col-7">
+                                <span class="input-group-prepend">
+                                    <button type="button" class="btn btn-danger btn-number" (click)="onMinus()"
+                                        [disabled]="soluong==1">
+                                        <span class="fa fa-minus"></span>
+                                    </button>
+                                </span>
+                                <input class="form-control  text-center " readonly type="text" [(ngModel)]="soluong">
+                                <span class="input-group-append">
+                                    <button type="button" class="btn btn-success btn-number" (click)="onPlus()"
+                                        [disabled]="soluong==10">
+                                        <span class="fa fa-plus"></span>
+                                    </button>
+                                </span>
+                            </div>
+                            <div class="col-md-5 p-0 col-12">
+                                <span class="text-left" style="line-height: 38px">
+                                    ( Còn {{product?.soLuong}} sản phẩm )
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="d-md-flex flex-row d-none   py-4 ">
+                        <span class="btn btn-danger w-100 mr-2 btn_muangay" (click)="onAddCart(product)">Mua
+                            ngay</span>
+                        <span class="btn btn-secondary w-100 btn_themsp" (click)="onAddCart(product)">Thêm vào giỏ
+                            hàng</span>
+                    </div>
+                    <div class="mota_chitiet p-2" style="min-height: 100px;height: 200px;overflow: auto;word-break: break_work"
+                    [innerHtml]="product?.moTa">
+                    </div>
+                </div>
+                <div class="d-block d-md-none bg-white  w-100 p-2  mat-elevation-z8"
+                    style="position: sticky;bottom: 0;z-index: 999;left:0">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="input-group col-7 p-0" style="transform: scale(0.8);margin-left: -1.3rem">
+                                <span class="input-group-prepend">
+                                    <button type="button" class="btn btn-danger btn-number" (click)="onMinus()"
+                                        [disabled]="soluong==1">
+                                        <span class="fa fa-minus"></span>
+                                    </button>
+                                </span>
+                                <input class="form-control  text-center " type="text" [(ngModel)]="soluong">
+                                <span class="input-group-append">
+                                    <button type="button" class="btn btn-success btn-number" (click)="onPlus()"
+                                        [disabled]="soluong==10">
+                                        <span class="fa fa-plus"></span>
+                                    </button>
+                                </span>
+                            </div>
+                            <div class=" p-0 col-5">
+                                <span class="text-left" style="line-height: 38px">
+                                    ( {{"Còn "+ product?.soLuong +" sản phẩm" | textTruncate:0:11}} )
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="d-flex flex-row mt-2 ">
+                        <span class="btn btn-sm btn-danger w-100 mr-2 btn_muangay" (click)="onAddCart(product)">Mua
+                            ngay</span>
+                        <span class="btn btn-sm btn-secondary w-100 btn_themsp" (click)="onAddCart(product)">Thêm vào
+                            giỏ hàng</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+<div class="container p-0">
+    <div class="col-lg-12 p-0">
+        <div class="tab_chitiet my-2">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs " style="border-bottom: 1px sloid">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#home">Thông tin sản phẩm</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#menu_danhgia">Đánh giá</a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content  pt-md-5 px-md-3 py-1 border border-top-0  bg-khoi3" style="border-color: #e9ecef">
+                <div class="tab-pane container active" id="home">
+                    <div class="content_mota_chitiet overflow-hidden"
+                        [innerHtml]="product?.thongTin | textTruncate:0:1000:!textShow | noSanitize">
+
+                    </div>
+                    <div class="w-100 text-center p-3"><span class="btn btn-warning" (click)="textShow=!textShow">View
+                            more</span></div>
+                </div>
+                <div class="tab-pane container fade px-1 " id="menu_danhgia">
+                    <app-danhgia></app-danhgia>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <br>
+    <div class="col-lg-12 p-0 mx-0">
+        <span class="title_sp_lq">SẢN PHẨM LIÊN QUAN</span>
+        <div class="slide_sp_lienquan">
+            <app-sanphamlienquan></app-sanphamlienquan>   
+        </div>
+    </div>
+</div>

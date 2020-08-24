@@ -1,0 +1,46 @@
+<div class=" py-5 bg-khoi3" style="height: 800px">
+    <mat-card class="col-md-4 col-12 p-0 mx-auto">
+        <div class="bg-secondary text-white text-center p-3">
+            <h4>Đổi mật khẩu</h4>
+        </div>
+        <mat-card-content class="p-3">
+            <div class="alert alert-danger d-flex flex-row" role="alert" *ngIf="!isshow">
+                <span>Token không hợp lệ</span> <a class="ml-auto" [routerLink]="['/']"
+                    routerLinkActive="router-link-active">Trang
+                    chủ</a>
+            </div>
+            <div class="alert alert-success d-flex flex-row" role="alert" *ngIf="isThanhCong">
+                <span> {{mess}}</span> <a class="ml-auto" [routerLink]="['/']"
+                    routerLinkActive="router-link-active">Trang chủ</a>
+            </div>
+            <form [formGroup]="frm" (ngSubmit)="onSubmitForm()" *ngIf="isshow">
+                <div class="form-group">
+                    <label for="current_password">Email</label>
+                    <input class="form-control" type="email" formControlName="email">
+                </div>
+
+                <div class="form-group">
+                    <div class="d-flex flex-row justify-content-between">
+                        <label for="new_password">Mật khẩu mới</label>
+                        <span [ngClass]="onValidatorTextColor('password')" [innerHTML]="onValidator('password')"></span>
+                    </div>
+                    <input class="form-control" type="password" formControlName="password">
+
+                </div>
+                <div class="form-group">
+                    <div class="d-flex flex-row justify-content-between">
+                        <label>Xác nhận mật khẩu</label>
+                        <span [ngClass]="onValidatorTextColor('re_password')"
+                            [innerHTML]="onValidator('re_password')"></span>
+                    </div>
+                    <input class="form-control" type="password" formControlName="re_password">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-info" [disabled]="frm.invalid">Đổi mật khẩu</button>
+                </div>
+            </form>
+
+        </mat-card-content>
+    </mat-card>
+
+</div>

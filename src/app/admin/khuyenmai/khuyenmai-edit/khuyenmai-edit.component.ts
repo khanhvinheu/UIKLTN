@@ -14,7 +14,7 @@ import { KhuyenmaiComponent } from '../khuyenmai.component';
 })
 export class KhuyenmaiEditComponent implements OnInit, OnDestroy {
 
-  is_loading = false;
+    is_loading = false;
     subscriptions: Subscription[] = [];
     Khuyenmai: Khuyenmai = null;
     frm: FormGroup;
@@ -62,7 +62,13 @@ export class KhuyenmaiEditComponent implements OnInit, OnDestroy {
                 //         'ẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợ]*'
                 // )
             ]
-        ]
+          ],
+          chietKhau:[
+            this.Khuyenmai.chietKhau,
+            [
+                Validators.required,
+            ]
+          ]
         });
     }
     onSubmitForm() {

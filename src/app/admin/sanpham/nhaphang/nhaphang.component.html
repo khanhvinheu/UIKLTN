@@ -1,0 +1,29 @@
+<form [formGroup]="frmAdd" (ngSubmit)="onSubmitForm()">
+    <mat-form-field class="w-100">         
+        <div class="d-flex flex-row justify-content-between ">
+            <label>Số lượng hiện tại:</label>
+            <span [ngClass]="onValidatorTextColor('soLuong')" [innerHTML]="onValidator('soLuong')"></span>
+        </div>
+        <input class="form-control" [ngClass]="onValidatorBorderColor('soLuonght')" placeholder="Nhập ..."
+            formControlName="soLuonght" type="number" min="0" max="100" disabled="true"/>
+     
+</mat-form-field>
+    <mat-form-field class="w-100">         
+            <div class="d-flex flex-row justify-content-between ">
+                <label>Nhập số lượng</label>
+                <span [ngClass]="onValidatorTextColor('soLuong')" [innerHTML]="onValidator('soLuong')"></span>
+            </div>
+            <input class="form-control" [ngClass]="onValidatorBorderColor('soLuong')" placeholder="Nhập ..."
+                formControlName="soLuong" type="number" min="0" max="100"/>
+         
+    </mat-form-field>
+    <div class="d-flex flex-row ">
+        <button type="submit" [disabled]="frmAdd.invalid || is_loading" mat-flat-button color="warn" class="mr-2">
+            <div class="d-flex justify-content-center position-relative">
+                <div class="spinner-border text-muted position-absolute" *ngIf="is_loading"></div>
+                <span> Thêm</span>
+            </div>
+        </button>
+        <button type="reset" mat-stroked-button color="basic">Làm mới</button>
+    </div>    
+</form>

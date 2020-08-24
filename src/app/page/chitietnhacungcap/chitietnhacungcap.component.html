@@ -1,0 +1,82 @@
+<app-loading></app-loading>
+<div class="container">
+    <div class="row">       
+        <div class="col-lg-5 col-md-10 col-12 p-5 py-md-0 order-1 order-md-2 d-flex justify-content-center">
+            <div class="img_sanpham text-center px-md-2 py-md-4 px-3 d-flex justify-content-center mx-auto strect_img_chitiet m-auto">
+                <img  src="{{api_url}}/upload/sanpham/{{nhacungcaps?.hinhAnh}}" class="strect_img_chitiet"
+                    style="object-fit: contain">
+            </div>
+        </div>
+        <div class="col-lg-6 col-12 order-3 px-0">
+            <div class="box_content_chitiet py-5">
+                <div class="px-2">
+                    <span class="title_sp_lq">{{ nhacungcaps?.tenNhacungcap | uppercase }}</span>
+                    <hr>
+                    <span class="text-secondary mr-2">SĐT:</span>
+                    <span class="mr-2">0{{ nhacungcaps?.soDienthoai }}</span>
+                    <div>
+                        <span class="text-secondary mr-2">Email:</span>
+                        <span class="mr-2">{{ nhacungcaps?.email }}</span>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <span class="text-secondary mr-2">Địa Chỉ:</span>
+                        <span class="text-decoration-none 	fa fa-map-marker">
+                            {{ nhacungcaps?.diaChi}}
+                        </span> 
+                    </div>
+                    <div class="d-md-flex flex-row d-none   py-4 ">
+                        <span class="btn btn-danger w-100 mr-2 btn_muangay" [routerLink]="['/search']" [queryParams]="{nsx: nhacungcaps?.id}"  routerLinkActive="router-link-active">Tất Cả Sản Phẩm</span>
+                      <!-- <span class="btn btn-danger w-100 mr-2 btn_muangay">Gọi: 0{{ nhacungcaps?.soDienthoai }}</span> -->
+                        
+                    </div>                   
+                    <span  class="text-secondary mr-2">Mô tả:</span>
+                    <hr>
+                    <div class="mota_chitiet p-2" style="min-height: 100px;height: 200px;overflow: auto;word-break: break_work"
+                        [innerHtml]="nhacungcaps?.moTa">
+
+                    </div>   
+                  </div>              
+                </div>
+            </div>
+        </div>
+    
+    <br>
+</div>
+<div class="container p-0">
+    <div class="col-lg-12 p-0">
+        <div class="tab_chitiet my-2">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs " style="border-bottom: 1px sloid">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#home">Thông tin nhà cung cấp</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#menu_danhgia">Đánh giá</a>
+                </li> -->
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content  pt-md-5 px-md-3 py-1 border border-top-0  bg-khoi3" style="border-color: #e9ecef">
+                <div class="tab-pane container active" id="home">
+                    <div class="content_mota_chitiet overflow-hidden"
+                        [innerHtml]="nhacungcaps?.thongTin | textTruncate:0:200:!textShow | noSanitize">
+
+                    </div>
+                    <div class="w-100 text-center p-3"><span class="btn btn-warning" (click)="textShow=!textShow">View
+                            more</span></div>
+                </div>
+                <!-- <div class="tab-pane container fade px-1 " id="menu_danhgia">
+                    <app-danhgia></app-danhgia>
+                </div> -->
+            </div>
+        </div>
+
+    </div>
+    <br>
+    <div class="col-lg-12 p-0 mx-0">
+        <span class="title_sp_lq">SẢN PHẨM LIÊN QUAN</span>
+        <div class="slide_sp_lienquan">
+            <!-- <app-sanphamlienquan></app-sanphamlienquan> -->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+<table [ngClass]="{'d-none': isLoading}" mat-table [dataSource]="dataSource" class="w-100 " matSort>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+      <td mat-cell *matCellDef="let item; let i =index"> {{i+1}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Ten">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Ten </th>
+      <td mat-cell *matCellDef="let item" class="text-left">
+        <span *ngIf="item.isShow">{{item.user.hoTen}}</span>
+        <mat-form-field *ngIf="!item.isShow">
+          <input matInput type="text" [(ngModel)]="item.user.hoTen">
+        </mat-form-field>
+  
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="Email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Email </th>
+      <td mat-cell *matCellDef="let item" class="text-left"> {{item.user.email}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="Admin">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Admin </th>
+      <td mat-cell *matCellDef="let item">
+        <mat-radio-button [disabled]='(!item.isShow || idtab==1) && currentUser.idQuyen!=0'
+          [checked]="item.user.idQuyen===1" (change)="onChangeQuyen(item.user,1)" name="btradio{{item.user.id}}">
+        </mat-radio-button>
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="NhanVien">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nhà cung cấp </th>
+      <td mat-cell *matCellDef="let item">
+        <mat-radio-button [disabled]='(!item.isShow || idtab==1)  && currentUser.idQuyen!=0'
+          [checked]="item.user.idQuyen===2" (change)="onChangeQuyen(item.user,2)" name="btradio{{item.user.id}}">
+        </mat-radio-button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="User">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Thành Viên </th>
+      <td mat-cell *matCellDef="let item">
+        <mat-radio-button [disabled]='(!item.isShow || idtab==1) && currentUser.idQuyen!=0'
+          [checked]="item.user.idQuyen===3" (change)="onChangeQuyen(item.user,3)" name="btradio{{item.user.id}}">
+        </mat-radio-button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="Action">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+      <td mat-cell *matCellDef="let item">
+        <div *ngIf="!item.isShow">
+          <button mat-raised-button color="primary" class="mr-2" (click)="onSaveRow(item)">Lưu</button>
+          <button mat-raised-button (click)="item.isShow=!item.isShow">Hủy</button>
+        </div>
+        <div>
+          <button *ngIf="item.isShow" mat-icon-button t color="warn" (click)="item.isShow=!item.isShow" class="mr-2"
+            [disabled]="(currentUser.id!=item.user.id && idtab==1) && currentUser.idQuyen!=0">
+            <i class="far fa-edit font-15pt "></i>
+          </button>
+          
+        </div>
+  
+  
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+  
+  </table>
+  <mat-paginator [pageSizeOptions]="[6,10, 20,50] " showFirstLastButtons></mat-paginator>
+  

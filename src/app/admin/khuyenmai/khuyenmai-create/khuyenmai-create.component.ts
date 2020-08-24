@@ -61,7 +61,13 @@ export class KhuyenmaiCreateComponent implements OnInit, OnDestroy {
                 //           'ẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợ]*'
                 //   )
               ]
-          ]
+            ],
+            chietKhau:[
+                '',
+                [
+                    Validators.required,
+                ]
+            ]
         });
     }
     onSubmitForm() {

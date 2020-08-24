@@ -1,0 +1,67 @@
+<div class="modal-body"> 
+    <button class="position-absolute top-right" type="button" class="close" (click)="onNoClick()" style="position: absolute;
+        right: 2px;">&times;</button>   
+    <div class="title"  [ngStyle]="{'background': 'url(' + api_url + '/upload/other/unnamed.png) no-repeat 0 0 / cover',
+    'background-size':'110%','height':'200px'}">
+    </div>
+    <div class="title_login"  [ngStyle]="{'background': 'url(' + api_url + '/upload/other/logo-login.PNG) no-repeat 0 0 / cover',
+    'background-size':'110%'}">       
+        <h3 style="margin-top: 100%; font-weight: bold;">
+            ĐĂNG NHẬP
+        </h3>
+    </div>
+    <div class="body-login">
+        <div class="alert alert-danger" role="alert" *ngIf="error">
+            {{error_content}}
+        </div>
+    <form [formGroup]="frm" (ngSubmit)="onSubmitForm()" class=" d-flex flex-column">      
+        <mat-form-field>            
+            <mat-label>Tên đăng nhập</mat-label>
+            <input matInput  formControlName="email">
+            <mat-error>
+                <span [ngClass]="onValidatorTextColor('email')" [innerHTML]="onValidator('email')" style="float: right;"></span>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Mật khẩu</mat-label>           
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" type="button">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+              <mat-error>
+                <span [ngClass]="onValidatorTextColor('password')" [innerHTML]="onValidator('password')" style="float: right;" ></span>
+              </mat-error>
+        </mat-form-field>
+        <div class="form-group form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" formControlName="remember"> Ghi nhớ mật khẩu
+            </label>
+            <button class=" btn-link btn" [mat-dialog-close]="'khoiphuc'" style="margin-left: 30px; color: black; font-size: 14px;">Quên mật khẩu</button> 
+        </div>
+        <!-- <div class="g-recaptcha" data-sitekey="6LcXJrcUAAAAAOu5JqPaB0-2Gim_ixq6BIpaGxhx"></div> -->
+        <!-- <div class="pb-3">
+            <re-captcha (resolved)="resolved($event)" siteKey="6LcXJrcUAAAAAOu5JqPaB0-2Gim_ixq6BIpaGxhx">
+            </re-captcha>
+        </div> -->
+            
+        <div class=" d-flex">
+            <!-- <button class="mr-auto btn-link btn" [mat-dialog-close]="'dangky'">Đăng ký</button>
+            <button class=" btn-link btn" [mat-dialog-close]="'khoiphuc'">Quên mật khẩu</button> -->
+            <button type="submit" class="btn btn-info align-self-center w-100 "
+                [disabled]="frm.invalid || !reCatcha_status" style="border-radius: 0%; background-color: #dc3545; border-color: #dc3545;">Đăng
+                nhập</button>
+                <button type="button" class="btn btn-info align-self-center w-100 "
+                [mat-dialog-close]="'dangky'" style="border-radius: 0%; background-color:#28a745;border-color:#28a745">Đăng
+                ký</button>
+        </div>
+        <button type="button" class="btn btn-info align-self-center w-100 " (click)="signInWithGoogle()" style="border-radius: 0%; background-color: #dc3545; border-color: #dc3545;margin-top: 10px;">
+            <span><img src="{{api_url}}/upload/other/gg.png" alt="" width="25px"></span> | Login with google
+        </button>
+    </form>
+    
+    <button type="submit" class="btn btn-info align-self-center w-100 " (click)="signInWithFB()"  style="border-radius: 0%; background-color: #2962ff; border-color: #2962ff;margin-top: 10px;">
+        <span><img src="{{api_url}}/upload/other/iconfb.png" alt="" width="33px"></span>| Login with facebook
+    </button>
+    </div>
+</div>
+

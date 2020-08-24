@@ -1,0 +1,137 @@
+<form [formGroup]="frm" (ngSubmit)="onSubmitForm()">
+    <div class="d-flex flex-wrap px-1 py-3">
+        <div class="form-group col-md-6  ">
+            <div class="d-flex flex-row justify-content-between ">
+                <label>Tên:</label>
+                <span [ngClass]="onValidatorTextColor('tenSanpham')" [innerHTML]="onValidator('tenSanpham')"></span>
+            </div>
+            <input class="form-control" [ngClass]="onValidatorBorderColor('tenSanpham')" placeholder="Nhập ..."
+                formControlName="tenSanpham" />
+        </div>
+        <div class="form-group col-md-6  ">
+            <div class="d-flex flex-row justify-content-between ">
+                <label>Giá:</label>
+                <span [ngClass]="onValidatorTextColor('gia')" [innerHTML]="onValidator('gia')"></span>
+            </div>
+            <input class="form-control" [ngClass]="onValidatorBorderColor('gia')" placeholder="Nhập ..."
+                formControlName="gia" type="number" />
+        </div>
+        <div  class="form-group col-md-6  "> 
+            <form [formGroup]="frmUp">        
+            <div class="d-flex flex-row justify-content-between ">
+                <label>Danh mục</label>
+                <span [ngClass]="onValidatorTextColor('idDanhMuc')" [innerHTML]="onValidator('idDanhMuc')" ></span>
+            </div>
+            <mat-select formControlName="idDanhMucs" class="form-control " disabled="true" readonly="true">
+                <ng-container *ngIf="danhmucs">
+                    <mat-option *ngFor="let danhmuc of dm" [value]="danhmuc.id" >
+                        {{danhmuc.tenDanhmuc}}
+                    </mat-option>
+                </ng-container>
+            </mat-select>
+            </form>  
+        </div>
+        <div class="form-group col-md-6  ">           
+            <div class="d-flex flex-row justify-content-between ">
+                <label>Danh mục</label>
+                <span [ngClass]="onValidatorTextColor('idDanhMuc')" [innerHTML]="onValidator('idDanhMuc')"></span>
+            </div>
+                <mat-select formControlName="idDanhMuc" class="form-control " (selectionChange)="onChange($event.value)" style="width: 50%;" [(ngModel)]="Sldanhmuc">
+                    <ng-container *ngIf="danhmucs">
+                        <mat-option *ngFor="let danhmuc of danhmucs" [value]="danhmuc.id">
+                            {{danhmuc.tenDanhmuc}}
+                        </mat-option>
+                    </ng-container>
+                </mat-select>
+            
+                <mat-select formControlName="idDanhMuc" class="form-control " style="width: 50%;" >
+                    <ng-container *ngIf="danhmucs">
+                        <mat-option *ngFor="let danhmuc of danhmucselect" [value]="danhmuc.id">
+                            {{danhmuc.tenDanhmuc}}
+                        </mat-option>
+                    </ng-container>
+                </mat-select>           
+            
+        </div>
+        <div class="form-group col-md-6  ">
+            <div class="d-flex flex-row justify-content-between ">
+                <label>Số lượng:</label>
+                <span [ngClass]="onValidatorTextColor('soLuong')" [innerHTML]="onValidator('soLuong')"></span>
+            </div>
+            <input class="form-control" [ngClass]="onValidatorBorderColor('soLuong')" min="0" max="100" placeholder="Nhập ..."
+                formControlName="soLuong" type="number"/>
+        </div>
+        <div class="form-group col-md-6  ">
+            <div class="d-flex flex-row justify-content-between ">
+                <label>Nhà cung cấp</label>
+                <span [ngClass]="onValidatorTextColor('idNhacungcap')" [innerHTML]="onValidator('idNhacungcap')"></span>
+            </div>
+
+            <mat-select formControlName="idNhacungcap" class="form-control " disabled="true" readonly="true">
+                <ng-container *ngIf="danhmucs">
+                    <mat-option *ngFor="let nhacungcap of nhacungcaps" [value]="nhacungcap.id">
+                        {{nhacungcap.tenNhacungcap}}
+                    </mat-option>
+                </ng-container>
+            </mat-select>
+        </div>
+        <div class="form-group col-md-6  ">
+            <div class="d-flex flex-row justify-content-between ">
+                <label>Nhà sản xuất</label>
+                <span [ngClass]="onValidatorTextColor('idNSX')" [innerHTML]="onValidator('idNSX')"></span>
+            </div>
+
+            <mat-select formControlName="idNSX" class="form-control ">
+                <ng-container *ngIf="danhmucs">
+                    <mat-option *ngFor="let nhasanxuat of nhasanxuats" [value]="nhasanxuat.id">
+                        {{nhasanxuat.Ten}}
+                    </mat-option>
+                </ng-container>
+            </mat-select>
+        </div>
+        <div class="form-group col-md-6  ">
+            <div class="d-flex flex-row justify-content-between">
+                <label>Hình:</label>
+                <span [ngClass]="onValidatorTextColor('hinhAnh')" [innerHTML]="onValidator('hinhAnh',true)"></span>
+            </div>
+            <div class="d-flex flex-row input-group">
+                <input  type="text" class="form-control" name='hinhAnh' [value]='filename' readonly formControlName="hinhAnh">
+                <input  (change)="onFileChange($event)" type='file' [hidden]='true' class="form-control"
+                    placeholder="Nhập tên nhà cung cấp " #file />
+                <div class="input-group-append">
+                    <button type="button" (click)="file.click()" class="btn btn-primary">Choose...</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-12">
+            <div class="d-flex flex-row justify-content-between">
+                <label>Mô tả:</label>
+                <span [ngClass]="onValidatorTextColor('moTa')" [innerHTML]="onValidator('moTa')"></span>
+            </div>
+            <ckeditor name="myckeditor" [config]="ckeConfig" formControlName="moTa" debounce="500">
+            </ckeditor>
+
+        </div>
+        <div class="form-group col-12">
+            <div class="d-flex flex-row justify-content-between">
+                <label>Thông tin:</label>
+                <span [ngClass]="onValidatorTextColor('thongTin')" [innerHTML]="onValidator('thongTin')"></span>
+            </div>
+             <ckeditor [config]="ckeConfig" formControlName="thongTin" name="myckeditor" debounce="500">
+            </ckeditor> 
+
+        </div>
+    </div>
+    <div style="position: sticky;bottom: 0 ;z-index: 99;" class="text-right px-1">
+        <div class="col bg-white py-2">
+            <button type="submit" (click)="onSubmitForm()" [disabled]="frm.invalid || is_loading" mat-flat-button
+                color="warn" class="mr-2">
+                <div class="d-flex justify-content-center position-relative">
+                    <div class="spinner-border text-muted position-absolute" *ngIf="is_loading"></div>
+                    <span> Cập nhật</span>
+                </div>
+            </button>
+            <button type="button" (click)="onBack()" mat-stroked-button color="basic">Thoát</button>
+        </div>
+    </div>
+</form>

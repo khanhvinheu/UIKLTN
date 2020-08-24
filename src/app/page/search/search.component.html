@@ -1,0 +1,100 @@
+<nav aria-label="breadcrumb" style="position: relative">
+    <ol class="breadcrumb container">
+        <li class="breadcrumb-item "><a [routerLink]="['/']" routerLinkActive="router-link-active" style="color: #000000; font-weight: bold;">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a>Tìm kiếm</a></li>
+    </ol>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col-2 mr-auto  d-lg-none d-flex" style="position: absolute;right:0;top: 0;">
+            <div (click)="toggleMenu()" style="position: fixed;z-index: 9999; bottom: 70px; right: 12px;">
+                <button class="p-0" mat-icon-button > <i class="fas fa-filter font-16pt" style="color: red;"></i></button>
+            </div>
+        </div>
+        <div class="col-12 col-lg-9 pl-lg-0">
+            <!-- <div class="py-2">
+                <span class="text-danger font-weight-bold"
+                    style="font-size: 1.5rem;text-transform: uppercase;"></span><small
+                    class="ml-2 text-warning"></small>
+            </div> -->           
+            <div class="d-flex flex-wrap py-3 filter_data" *ngIf="isShow">
+                <div class="col-lg-3 col-6 col-md-4 p-0 box_item d-flex" *ngFor="let item of obs['value'] ">
+                    <div class="card box-item text-center  w-100  mat-elevation-z1" style="height: 100%">
+                        <div class="box_img p-2" style="height: 150px; overflow: hidden">
+                            <img class="card-img-top w-100 h-100" src="{{api_url}}/upload/sanpham/{{item.hinhAnh}}"
+                                alt="Card image">
+                        </div>
+                        <div class="card-content p-2">
+                            <a class="text-decoration-none">
+                                <span
+                                    class="card_title text-center text_color_1 d-block text-truncate mx-auto w-90 font-weight-bold">
+                                    {{ item.tenSanpham |uppercase}}
+                                </span>
+                            </a>
+                            <ng-container *ngIf="item.soLuong === 0;else elseBlock">
+                                <span class="card-cost text-center d-block">Hết hàng</span>
+                                <div class="d-flex flex-row justify-content-center">
+                                    <span class="card_old_cost text-center invisible">-</span>
+                                </div>
+                            </ng-container>
+                            <ng-template #elseBlock>
+                                
+                                <div class="d-flex flex-row justify-content-center">
+                                    <ng-container *ngIf="item?.chietKhau > 0; else elseBlock2">
+                                        <span class="card_old_cost text-center">
+                                            {{item?.gia | currency:'VND':'symbol'}}
+                                        </span>
+                                        <span class="card_label_km btn btn-sm btn-danger p-0">
+                                            -{{ item?.chietKhau | number:'1.0-1' }}%
+                                        </span>
+                                    </ng-container>
+                                    <ng-template #elseBlock2>
+                                        <span class="card_old_cost text-center invisible">-</span>
+                                    </ng-template>
+                                </div>
+                                <span class="card-cost text-center d-block">
+                                    {{ item?.gia - (item?.gia*item?.chietKhau/100) | currency:'VND':'symbol'}}
+                                </span>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="box_btn_mua_hidden ">
+                        <div class="bg-dark h-100 w-100"></div>
+                        <div class="d-flex h-100">
+                            <div class="d-flex flex-row mx-auto align-self-center box_btn_ct" style="z-index: 1">
+                                <button class="btn btn-danger mr-2 btn_themnhanh" (click)="onAddCart(item)"
+                                    [disabled]="item?.soLuong ===0">Mua</button>
+
+                                <a class="btn btn-light mr-2" [routerLink]="['/chitietsanpham/'+item.id]"
+                                    routerLinkActive="router-link-active">Xem</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 ">
+                <div>
+                    <mat-paginator [pageSizeOptions]="[10, 20, 32, 40] " showFirstLastButtons class="justify-content-center">
+                    </mat-paginator>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-12 col-lg-3 pr-0 d-none d-lg-block">
+            <app-box-filter></app-box-filter>
+
+            <!-- <div class="py-2 d-none d-lg-block">
+                <div class="bg-danger text-center p-2">
+                    <span class="text-white font-weight-bold " style='font-size: 1rem;text-transform: uppercase'>Sản
+                        phẩm bán chạy</span>
+                </div>
+                <app-sanphambanchay></app-sanphambanchay>
+            </div> -->
+        </div>
+    </div>
+</div>
+<mat-sidenav-container class="d-md-none d-flex" style="z-index: 9999">
+
+</mat-sidenav-container>

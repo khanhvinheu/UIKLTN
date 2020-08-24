@@ -1,0 +1,22 @@
+<form [formGroup]="frmAdd" (ngSubmit)="onSubmitForm()">
+    <mat-form-field class="w-100">
+        <mat-label>Khuyến mãi</mat-label>
+        <mat-select formControlName="idKhuyenmai">
+            <ng-container *ngIf="chirtietKm">
+                <mat-option [value]="1">null</mat-option>
+                <mat-option *ngFor="let khuyenmai of chirtietKm" [value]="khuyenmai.id">
+                    {{khuyenmai.tieuDe}}
+                </mat-option>
+            </ng-container>
+        </mat-select>        
+    </mat-form-field>
+    <div class="d-flex flex-row ">
+        <button type="submit" [disabled]="frmAdd.invalid || is_loading" mat-flat-button color="warn" class="mr-2">
+            <div class="d-flex justify-content-center position-relative">
+                <div class="spinner-border text-muted position-absolute" *ngIf="is_loading"></div>
+                <span> Thêm</span>
+            </div>
+        </button>
+        <button type="reset" mat-stroked-button color="basic">Làm mới</button>
+    </div> 
+</form>

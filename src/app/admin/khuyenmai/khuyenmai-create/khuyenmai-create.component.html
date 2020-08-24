@@ -11,6 +11,15 @@
     <div class="form-group">
         <div class="d-flex flex-row justify-content-between">
             <label>Tiêu Đề:</label>
+            <span [ngClass]="onValidatorTextColor('chietKhau')" [innerHTML]="onValidator('chietKhau')">
+            </span>
+        </div>
+        <input [ngClass]="onValidatorBorderColor('chietKhau')" type="number" min="0" max="100" class="form-control " placeholder="Nhập tên nhà cung cấp "
+            formControlName="chietKhau" />
+    </div>
+    <div class="form-group">
+        <div class="d-flex flex-row justify-content-between">
+            <label>Tiêu Đề:</label>
             <span [ngClass]="onValidatorTextColor('noiDungKm')" [innerHTML]="onValidator('noiDungKm')">
             </span>
         </div>

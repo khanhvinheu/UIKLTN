@@ -84,7 +84,7 @@ export class ChitietkhuyenmaiCreateComponent implements OnInit {
           if (key === 'NgayBD' || key === 'NgayKT') {
               this.frmAdd.value[key] = this.datePipe.transform(
                   this.frmAdd.controls[key].value,
-                  'yyyy-MM-dd h:mm:ss'
+                  'yyyy-MM-dd '
               );
           }
           formData.append(key, this.frmAdd.value[key]);

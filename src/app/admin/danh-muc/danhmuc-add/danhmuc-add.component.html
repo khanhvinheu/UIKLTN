@@ -13,7 +13,7 @@
         <mat-select formControlName="danhMuccha">
             <ng-container *ngIf="danhmucs">
                 <mat-option [value]="null">null</mat-option>
-                <mat-option *ngFor="let danhmuc of danhmucs" [value]="danhmuc.id">
+                <mat-option *ngFor="let danhmuc of danhmucCha" [value]="danhmuc.id">
                     {{danhmuc.tenDanhmuc}}
                 </mat-option>
             </ng-container>

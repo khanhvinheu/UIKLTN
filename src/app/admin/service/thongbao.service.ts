@@ -10,9 +10,9 @@ export class ThongbaoService {
     constructor(private _snackBar: MatSnackBar) {}
     open(data?: string, color?: string): void {
         this._snackBar.openFromComponent(ThongbaoComponent, {
-            duration: 4000,
+            duration: 500,
             data,
-            verticalPosition: 'top',
+            verticalPosition: 'bottom',
             panelClass: [color]
         });
     }

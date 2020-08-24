@@ -51,7 +51,7 @@ export class DanhmuchinhService {
         );
     }
     createNew(values: any) {
-        this.isLoadingSub.next(true);
+        this.isLoadingSub.next(true); 
         this.http.post<DanhMucHinh>(this.API, values).subscribe(
             res => {
                 if (res['status'] === 'OK') {
@@ -64,7 +64,7 @@ export class DanhmuchinhService {
                 }
             },
             () => {},
-            () => this.isLoadingSub.next(false)
+            () => this.isLoadingSub.next(false),
         );
     }
     delete(value) {

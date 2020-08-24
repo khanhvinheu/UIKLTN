@@ -1,0 +1,71 @@
+<div class="card " style="border-top:none">
+    <div class="card-header  " [ngClass]="{'m_color_primary text-center': thugon}">
+      <span *ngIf="thugon" class="font-16pt   text-white">Top 10 sản phẩm bán chạy</span>
+      <form *ngIf="!thugon" [formGroup]="frm" (ngSubmit)="onSubmit()">
+        <div class="d-flex flex-row align-items-center flex-wrap ">
+          <mat-form-field class="mr-3 col col-md-2 ">
+            <mat-label>Thống kê</mat-label>
+            <mat-select formControlName="tieuchi" class="text-white">
+              <mat-option *ngFor="let item of tieuchis" [value]="item">
+                {{item.ten }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="mr-3 col col-md-2">
+            <mat-label>Chọn năm</mat-label>
+            <mat-select formControlName="year">
+              <mat-option [value]='0'>Tất cả</mat-option>
+              <mat-option *ngFor="let item of years" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="mr-3 col col-md-2">
+            <mat-label>Chọn quý</mat-label>
+            <mat-select formControlName="quater">
+              <mat-option *ngFor="let item of quaters" [value]="item">
+                {{item.id}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button type="submit" mat-raised-button color="primary" [disabled]="frm.invalid">Xem</button>
+        </div>
+      </form>
+    </div>
+    <div class="card-body p-0 overflow-auto">
+      <mat-progress-bar *ngIf="isLoading" mode="indeterminate" class="example-tree-progress-bar">
+      </mat-progress-bar>
+      <div class="col-12 p-0 " style="max-height: 540px; overflow:auto">
+        <table [ngClass]="{'d-none': isLoading}" mat-table [dataSource]="dataSource" class="w-100  " matSort>
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+            <td mat-cell *matCellDef="let element; let i =index"> {{i+1}} </td>
+  
+          </ng-container>
+          <ng-container matColumnDef="TenSanPham">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Tên sản phẩm </th>
+            <td mat-cell *matCellDef="let element" [matTooltip]="element.TenSanPham" [matTooltipPosition]="'right'"
+              class="text-left">
+              {{element.tenSanpham | textTruncate:0:20}} </td>
+  
+          </ng-container>
+          <ng-container matColumnDef="SoLuong">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Số lượng </th>
+            <td mat-cell *matCellDef="let element" class="text-right"> {{element.soLuong}} </td>
+  
+          </ng-container>
+  
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+            <td mat-cell *matCellDef="let element">
+            </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+  
+        </table>
+      </div>
+    </div>
+  </div>
+  

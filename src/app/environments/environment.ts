@@ -4,9 +4,13 @@
 
 export const environment = {
     production: false,
-    //api_url: 'http://127.0.0.1:8000/api',
-    api_url: 'https://peaceful-badlands-84163.herokuapp.com/api',
-    api_img: 'https://peaceful-badlands-84163.herokuapp.com'
+    api_url: 'http://127.0.0.1:8000/api',
+    //api_url: 'https://peaceful-badlands-84163.herokuapp.com/api',
+    //api_img: 'https://peaceful-badlands-84163.herokuapp.com',
+
+    //api_url:'https://quiet-reef-07659.herokuapp.com/api',
+    //api_img:'https://quiet-reef-07659.herokuapp.com/'
+
 };
 
 /*

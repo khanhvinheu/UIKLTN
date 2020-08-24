@@ -17,6 +17,7 @@ export class DanhmucService {
     public isLoadingObs: Observable<boolean>;
     public itemSub: BehaviorSubject<DanhMuc>;
     public itemObs: Observable<DanhMuc>;
+    public catalogParent:BehaviorSubject<DanhMuc[]>;
     private API: string = environment.api_url + '/admin/danhmuc';
     constructor(
         public http: HttpClient,
@@ -47,7 +48,7 @@ export class DanhmucService {
             () => {},
             () => this.isLoadingSub.next(false)
         );
-    }
+    }   
     createNew(values: any) {
         this.isLoadingSub.next(true);
         this.http.post<DanhMuc>(this.API, values).subscribe(

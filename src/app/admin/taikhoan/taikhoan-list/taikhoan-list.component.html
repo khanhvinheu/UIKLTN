@@ -1,0 +1,22 @@
+<div class="card">
+    <div class="card-header m_color_primary text-center my_title">
+        PHÂN QUYỀN
+    </div>
+    <div class="card-body p-0 overflow-auto" style="position: sticky;">
+        <mat-tab-group mat-align-tabs="start" animationDuration="0ms">
+            <mat-tab label="Admin">
+                <app-taikhoan-tab [idtab]="1"></app-taikhoan-tab>
+            </mat-tab>
+            <mat-tab label="Nhà cung cấp">
+                <app-taikhoan-tab [idtab]="2"></app-taikhoan-tab>
+            </mat-tab>
+            <mat-tab label="Thành viên">
+                <app-taikhoan-tab [idtab]="3"></app-taikhoan-tab>
+            </mat-tab>
+            <mat-tab label="Tài khoản bị khóa">
+                <app-taikhoan-tab [idtab]="0"></app-taikhoan-tab>
+            </mat-tab>
+        </mat-tab-group>
+
+    </div>
+</div>

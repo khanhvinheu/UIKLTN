@@ -1,0 +1,143 @@
+<div class="wrapper_thanhtoan">
+    <div class="container px-0 py-3">
+        <div class="card" style="min-height: 600px">
+            <div class="card-body contain_sticky p-0 mat-elevation-z3">
+
+                <mat-horizontal-stepper [linear]="true" #stepper class="w-100 p-md-0 p-3 ">
+                    <mat-step [stepControl]="firstFormGroup">
+
+                        <form [formGroup]="firstFormGroup" class=" m_form p-md-3 p-0 col-md-8 col mx-auto  ">
+                            <ng-template matStepLabel><span class="d-none d-md-block">Đia chỉ giao hàng</span>
+                            </ng-template>
+                            <div class="m_form_group">
+                                <label class="col-md-3 col-12 ">Email:</label>
+                                <div class="col-md-9 col-12  ">
+                                    <input class="form-control" disabled="true" placeholder="Nhập Email" type="email"
+                                        value='{{user?.email }}'>
+                                </div>
+                            </div>
+                            <div class=" m_form_group">
+                                <label class="col-md-3 col-12 ">Người nhận:</label>
+                                <div class="col-md-9 col-12">
+                                    <input type="text" class="form-control" placeholder="Nhập họ tên"
+                                        formControlName="NguoiNhan" [ngClass]="onValidatorBorderColor('NguoiNhan')">
+                                    <span [ngClass]="onValidatorTextColor('NguoiNhan')"
+                                        [innerHTML]="onValidator('NguoiNhan',true)"
+                                        style="position: absolute;right: 0;top:0"></span>
+                                </div>
+
+                            </div>
+                            <div class="m_form_group">
+                                <label class="col-md-3 col-12 ">Điện thoại:</label>
+                                <div class="col-md-9 col-12">
+                                    <input type="number" class="form-control" formControlName="DienThoai"
+                                        placeholder="Nhập số điện thoại"
+                                        [ngClass]="onValidatorBorderColor('DienThoai')">
+                                    <span [ngClass]="onValidatorTextColor('DienThoai')"
+                                        [innerHTML]="onValidator('DienThoai',true)"></span>
+                                </div>
+                            </div>
+               
+                        <!-- <span class="text-lg-right px-0 px-lg-3 col-lg-2 col-12"></span> -->         
+                        <div class=" m_form_group">    
+                            <label class="col-md-3 col-12 "></label>      
+                            <mat-form-field class=" col-lg-4 col-12">
+                                <mat-label> Tỉnh (TP) </mat-label>
+                                <mat-select [(ngModel)]="tinh" (selectionChange)="onChange($event.value)" formControlName="tinh" >
+                                <!-- <mat-option>None</mat-option> -->
+                                <mat-option  *ngFor="let data of data" [value]="data.name">{{data.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class=" col-lg-5 col-12">
+                                <mat-label> Quận (Huyện) </mat-label>
+                                <mat-select [(ngModel)]="huyensl" formControlName="huyen" (selectionChange)="onChangexa($event.value)" >
+                                <!-- <mat-option >None</mat-option> -->
+                                <mat-option *ngFor="let huyens of huyen" [value]="huyens.name">{{huyens.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>  
+                        <div class=" m_form_group">    
+                            <label class="col-md-3 col-12 "></label>   
+                            <mat-form-field class=" col-lg-4 col-12">
+                                <mat-label> Thị trấn(phường,xa) </mat-label>
+                                <mat-select [(ngModel)]="xasl" formControlName="xa">
+                                <!-- <mat-option >None</mat-option> -->
+                                <mat-option *ngFor="let xas of xa" [value]="xas.prefix+' '+xas.name">{{xas.prefix}} {{xas.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field> 
+                            <mat-form-field class=" col-lg-5 col-12">                                 
+                                <input matInput formControlName="diaChihome" (input)="changeLocation()" [(ngModel)]="diaChihome" placeholder="Nhập: số nhà - ấp">
+                            </mat-form-field> 
+                        </div>
+                        <!-- <mat-form-field class=" col-lg-12 col-12">
+                            <mat-label> Địa chỉ: </mat-label>
+                            <textarea matInput type="text" formControlName="DiaChi" value="{{diaChihome}}-{{xasl}}-{{huyensl}}-TP.{{tinh}}" class="col-lg-9 col-12" ></textarea>
+                        </mat-form-field>    -->
+                            <div class=" m_form_group">
+                                <label class="col-md-3  col-12">Địa chỉ chi tiết:</label>
+                                <div class="col-md-9 col-12">
+                                    <input type="text" class="  form-control" formControlName="DiaChi"
+                                        placeholder="Nhập địa chỉ" [ngClass]="onValidatorBorderColor('DiaChi')">
+                                    <span [ngClass]="onValidatorTextColor('DiaChi')"
+                                        [innerHTML]="onValidator('DiaChi',true)"></span>
+                                </div>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="secondFormGroup">
+                        <form [formGroup]="secondFormGroup" class="p-md-3 p-0 col-md-8 col mx-auto ">
+                            <ng-template matStepLabel><span class="d-none d-md-block">Chọn phương thức thanh toán</span>
+                            </ng-template>
+                            <div class="m_form_group">
+                                <label class="col-md-3 col-12 ">Phương thức TT:</label>
+                                <div class="col-md-9 col-12">
+                                    <mat-select class="form-control text-left" [value]="0"
+                                        placeholder="Chọn phương thức TT" formControlName="phuongthuctt">
+                                        <mat-option *ngFor="let item of phuongthucs;let i=index" [value]="i">
+                                            {{item}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <span [ngClass]="onValidatorTextColor2('phuongthuctt')"
+                                        [innerHTML]="onValidator2('phuongthuctt',true)"></span>
+                                </div>
+                            </div>
+                        </form>
+                    </mat-step>
+                    
+                    
+                    <mat-step>
+                        <ng-template matStepLabel><span class="d-none d-md-block">Xác nhận</span> </ng-template>
+                        <div class="p-md-3 ">
+                            <app-hoanthanhthanhtoan class="" [frm1]="firstFormGroup.value"
+                                [frm2]="secondFormGroup.value" (myClick)="onStepChange($event)">
+                            </app-hoanthanhthanhtoan>
+                        </div>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel><span class="d-none d-md-block">Hoàn thành</span></ng-template>
+                        <div class="p-md-3 p-0">
+                            <app-dathangthanhcong [tongtien]="tongtien"></app-dathangthanhcong>
+                        </div>
+                    </mat-step>
+
+                </mat-horizontal-stepper>
+                <div class="text-center my_sticky p-3 mat-elevation-z2">
+                    <button mat-stroked-button class="mr-2" (click)="onBack()" *ngIf="showback">Quay lại</button>
+                    <button mat-raised-button color="primary" (click)="onNext()" *ngIf="shownext">Tiếp tục</button>
+                    <button mat-raised-button color="warn" *ngIf="showdathang" class="position-relative "
+                        [disabled]="firstFormGroup.invalid || secondFormGroup.invalid || is_loading"
+                        (click)="onPutChild()">
+                        <div class="d-flex justify-content-center position-relative">
+                            <div class="spinner-border text-muted position-absolute" *ngIf="is_loading"></div>
+                            <span>Hủy đơn hàng</span>
+                        </div>
+                    </button> 
+                                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-12 px -md-0">
+
+        </div>
+    </div>
+</div>

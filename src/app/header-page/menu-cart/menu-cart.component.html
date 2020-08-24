@@ -1,0 +1,43 @@
+<div style="max-height: 20rem; overflow-y: auto">
+    <div class="d-block d-flex flex-row p-2 border-bottom-khoi" *ngFor="let item of carts">
+        <div class="col-lg-4 col-4 px-1">
+            <div class="wrapper_img" style="max-width: 4rem;max-height: 4rem">
+                <img *ngIf="findSanPham(item?.idSanPham)"
+                    src="{{api_url}}/upload/sanpham/{{ findSanPham(item?.idSanPham)?.hinhAnh }}"
+                    style="width: 100%;height: auto" alt="">
+            </div>
+
+        </div>
+        <div class="col-lg-7 col-6 d-flex flex-column px-1">
+            <span class="name_sp">
+                <h6>{{ findSanPham(item?.idSanPham)?.tenSanpham |titlecase}}</h6>
+            </span>
+            <!-- <span class="info_sp">{{findSanPham(item?.idSanPham)?.TenNSX |titlecase }}</span> -->
+            <ng-container *ngIf="findSanPham(item?.idSanPham)?.soLuong === 0;else elseBlock">
+                <span class="card-cost">Hết hàng</span>
+            </ng-container>
+            <ng-template #elseBlock>
+               
+                <div class=" flex-row" *ngIf="findSanPham(item?.idSanPham)?.chietKhau > 0 ">
+                    <span
+                        class="card_old_cost text-center">{{findSanPham(item?.idSanPham)?.gia| currency:'VND':'symbol'}}</span>
+                    <span class="card_label_km btn btn-sm btn-danger p-0 ">
+                        -{{ (findSanPham(item?.idSanPham)?.chietKhau)| number:'1.0-1' }}%
+                    </span>
+                </div>
+                <span class="card-cost">
+                    {{ findSanPham(item?.idSanPham)?.gia - (findSanPham(item?.idSanPham)?.gia*findSanPham(item?.idSanPham)?.chietKhau)/100 | currency:'VND':'symbol'}}
+                </span>
+            </ng-template>
+        </div>
+        <div class="col-lg-1 col-2 px-md-2 text-center px-1"><span>{{ item.SoLuong}}</span></div>
+    </div>
+
+</div>
+
+<div class="d-flex flex-column bg-khoi3 px-3 pt-3">
+    <div class="d-flex flex-row">
+        <span class="mr-auto font-weight-bold">Thành tiền 1:</span>
+        <span class="text-danger font-weight-bold">{{loadthanhtien() | currency:'VND':'symbol'}}</span>
+    </div>
+</div>

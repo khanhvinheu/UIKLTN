@@ -1,0 +1,15 @@
+<div class="wrapper_tt py-2">
+    <div class="card container py-5 px-5" style="min-height: 400px">
+        <h1 class="text-center mb-5">Đặt hàng thành công</h1>
+        <p>Đơn hàng <span class="text-danger font-weight-bold"></span> của bạn đã được hệ thống xác
+            nhận !</p>
+        <p>Vui lòng chuẩn bị số tiền <span class="text-danger font-weight-bold">
+             {{tongtien +15000 | currency:'VND'}}
+                đ</span> để nhận hàng khi nhân viên giao hàng liên lạc.</p>
+        <p>Xin cám ơn !</p>
+        <div class="text-center">
+            <button mat-raised-button class="p-2 text-white bg-warning" [routerLink]="['/']"
+                routerLinkActive="router-link-active">Tiếp tục mua sắm</button>
+        </div>
+    </div>
+</div>

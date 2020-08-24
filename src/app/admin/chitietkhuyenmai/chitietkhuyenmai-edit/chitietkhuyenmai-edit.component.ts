@@ -50,7 +50,7 @@ export class ChitietkhuyenmaiEditComponent implements OnInit, OnDestroy {
         this.date = new Date().toISOString(); 
         this.date=this.datePipe.transform(
             this.date,
-            'yyyy-MM-dd h:mm:ss'
+            'yyyy-MM-dd'
         );          
        
         this.datenow=new Date(this.date).toISOString();      

@@ -15,7 +15,7 @@ import { Pttt } from 'src/app/models/pptt';
 })
 export class PtttEditComponent implements OnInit {
 
-  is_loading = false;
+    is_loading = false;
     subscriptions: Subscription[] = [];
     pttt: Pttt = null;
     frm: FormGroup;

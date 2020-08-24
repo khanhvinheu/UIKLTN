@@ -1,0 +1,47 @@
+<!-- <ngx-slick-carousel #slickModal="slick-carousel" [config]="slideConfig" class="d-md-flex d-none flex-row px-0 "
+    style="max-height:auto ;max-width: 100% ; width: 100%;height: auto;">
+    <div ngxSlickItem>
+        <div class="card">
+            <img src="{{api_url}}/upload/baner/baner.jpg" class="h-100 w-100">
+        </div>
+    </div>
+    <div ngxSlickItem>
+        <div class="card">
+            <img src="{{api_url}}/upload/baner/baner2.jpg" class="h-100 w-100">
+        </div>
+    </div>
+    <div ngxSlickItem>
+        <div class="card">
+            <img src="{{api_url}}/upload/baner/baner3.jpg" class="h-100 w-100">
+        </div>
+    </div>
+</ngx-slick-carousel>
+<ngx-slick-carousel #slickModal2="slick-carousel" [config]="slideConfig" class="d-flex d-md-none  w-100 ">
+    <div ngxSlickItem>
+        <div class="card">
+            <img src="{{api_url}}/upload/baner/baner.jpg" class="h-100 w-100">
+        </div>
+    </div>
+    <div ngxSlickItem>
+        <div class="card">
+            <img src="{{api_url}}/upload/baner/baner2.jpg" class="h-100 w-100">
+        </div>
+    </div>
+    <div ngxSlickItem>
+        <div class="card">
+            <img src="{{api_url}}/upload/baner/baner3.jpg" class="h-100 w-100">
+        </div>
+    </div>
+</ngx-slick-carousel> -->
+
+<mdb-carousel [animation]="'slide'">
+  <mdb-carousel-item>
+    <img class="d-block w-100" src="{{api_url}}/upload/baner/baner1.jpg" alt="First slide">
+  </mdb-carousel-item>
+  <mdb-carousel-item>
+    <img class="d-block w-100" src="{{api_url}}/upload/baner/baner2.jpg" alt="Second slide">
+  </mdb-carousel-item>
+  <mdb-carousel-item>
+    <img class="d-block w-100" src="{{api_url}}/upload/baner/baner3.jpg" alt="Third slide">
+  </mdb-carousel-item>
+</mdb-carousel>

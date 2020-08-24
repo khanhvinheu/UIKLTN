@@ -30,11 +30,14 @@
             "styles": [
               "src/custom-theme.scss",
               "src/styles.sass",
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/slick-carousel/slick/slick.scss",
+              "node_modules/slick-carousel/slick/slick-theme.scss"
             ],
-            "scripts": [
+            "scripts": [             
               "./node_modules/jquery/dist/jquery.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js",              
+              "./node_modules/slick-carousel/slick/slick.min.js"             
             ]
           },
           "configurations": {
@@ -72,6 +75,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "ShopUI:build"
+           // "port": 80
           },
           "configurations": {
             "production": {

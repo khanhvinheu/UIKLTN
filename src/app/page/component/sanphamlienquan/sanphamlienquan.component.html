@@ -1,0 +1,59 @@
+<ngx-slick-carousel #slickModal="slick-carousel" [config]="slideConfig" class="d-flex flex-row py-2 overflow-hidden">
+    <div ngxSlickItem class="col-lg-3  col-md-4 col-6 px-1 px-md-2 " *ngFor="let item of products;trackBy: trackByFn">
+        <div class="py-3">
+            <div class="card box-item_slide text-center p-2  mat-elevation-z3" style="height: 310px;">
+                <div [routerLink]="['/chitietsanpham',+item.id]" routerLinkActive="router-link-active"
+                    class="box_img d-flex justify-content-center p-2 " style='height: 180px;overflow: hidden'>
+                    <img class="card-img-top w-100 h-100 " src="{{api_url}}/upload/sanpham/{{ item?.hinhAnh }}"
+                        alt="Card image">
+                </div>
+                <div class="card-content">
+                    <a class="text-decoration-none">
+                        <h2
+                            class="card_title text-center text-secondary text-truncate d-block mx-auto w-90" >{{ item.tenSanpham|uppercase }}
+                    </h2>
+                    </a>
+                    <ng-container *ngIf="item?.soLuong === 0;else elseBlock">
+                        <span class="card-cost text-center d-block">Hết hàng</span>
+                        <div class="d-flex flex-row justify-content-center">
+                            <span class="card_old_cost text-center invisible">-</span>
+                        </div>
+                    </ng-container>
+                    <ng-template #elseBlock>
+                       
+                        <div class="d-flex flex-row justify-content-center">
+                            <ng-container *ngIf="item?.chietKhau != null; else elseBlock2">
+                                <span class="card_old_cost text-center">
+                                    {{item?.gia | currency:'VND':'symbol'}}
+                                </span>
+                                <span class="card_label_km btn btn-sm btn-danger p-0">
+                                    -{{ item?.chietKhau | number:'1.0-1' }}%
+                                </span>
+                            </ng-container>
+                            <ng-template #elseBlock2>
+                                <span class="card_old_cost text-center invisible">-</span>
+                            </ng-template>
+                        </div>   
+                        <h2 class="card-cost text-center d-block">
+                            {{ item?.gia- item?.gia* item?.chietKhau/100 | currency:'VND':'symbol'}}
+                        </h2>                    
+                    </ng-template>  
+                            <div class="d-flex flex-row justify-content" >
+                                <ngb-rating [(rate)]="item.rating" max="5" [readonly]="true">
+                                    <ng-template let-fill="fill" let-index="index">
+                                        <span class="fa fa-star-o mystar" [class.filled]="fill === 100"></span>
+                                    </ng-template>
+                                </ngb-rating>  
+    
+                            </div>
+                            <div class="d-flex flex-row justify-content">
+                                <span class="text-decoration-none 	fa fa-map-marker">
+                                    {{(( item?.diaChi).toString()).split("-").reverse()[0]}}
+                                </span> 
+                            </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</ngx-slick-carousel>

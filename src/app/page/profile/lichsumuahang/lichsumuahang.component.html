@@ -1,0 +1,36 @@
+<div *ngFor="let item of orders | keyvalue" class="p-md-3 p-2">
+    <mat-card class="bg-khoi3">
+        <div class="d-flex flex-column mb-2">
+            <div class="d-flex flex-row">
+                <span class=" text-danger font-weight-bold"><i class="far fa-sticky-note mr-2"></i> #{{item.key}}</span>
+                <div class="ml-auto">
+                    <i class="far fa-calendar-alt mr-2"></i>
+                    <span>{{item.value[0].created_at | date:'d/M/yy, h:mm a':'vi-VN' }}</span>
+                </div>
+            </div>
+            <div class="d-flex flex-row">
+                <div>
+                    <i class="fas fa-map-marker-alt mr-2 text-info"></i>
+                    <span> {{item.value[0].DiaChi}}</span>
+                </div>
+                <div class="ml-auto"
+                    [ngClass]="{'text-success': item.value[0]?.idTrangthai==4 || item.value[0]?.idTrangthai==6 ,'text-danger':item.value[0]?.idTrangthai==5,'text-warning':item.value[0]?.idTrangthai==2||item.value[0]?.idTrangthai==3||item.value[0]?.idTrangthai==1}">
+                       {{item.value[0].StatusName}}
+                </div>
+            </div>
+        </div>
+        <mat-accordion>
+            <mat-expansion-panel class="px-0">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <span class="font-weight-bold" style="padding-top: 10px;">
+                            Tổng tiền: {{item.value[0].tongtientra | currency:'VND':'symbol'}} <h6>(Đã gồm phí giao hàng 15.000đ)</h6>
+                        </span>
+                    </mat-panel-title>                   
+                </mat-expansion-panel-header>
+                <app-chitietdonhang [orderDetails]="item?.value"></app-chitietdonhang>
+            </mat-expansion-panel>
+
+        </mat-accordion>
+    </mat-card>
+</div>

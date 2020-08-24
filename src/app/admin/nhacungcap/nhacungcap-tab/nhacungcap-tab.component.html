@@ -1,0 +1,19 @@
+<div class="card">
+    <div class="card-header m_color_primary text-center my_title">
+        PHÂN QUYỀN
+    </div>
+    <div class="card-body p-0 overflow-auto" style="position: sticky;">
+        <mat-tab-group mat-align-tabs="start" animationDuration="0ms">
+            <mat-tab label="Đang chờ xét duyệt">
+                <app-nhacungcap-list [idtab]="1"></app-nhacungcap-list>
+
+            </mat-tab>
+            <mat-tab label="Đã duyệt">
+                <app-nhacungcap-list [idtab]="2"></app-nhacungcap-list>
+            </mat-tab>           
+            <mat-tab label="Đã khóa">
+                <app-nhacungcap-list [idtab]="0"></app-nhacungcap-list>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

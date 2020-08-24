@@ -6,6 +6,7 @@ import { DanhmucService } from '../../service/danhmuc.service';
 import { ResultValidatorService } from '../../service/result-validator.service';
 import { DanhmucListComponent } from '../danhmuc-list/danhmuc-list.component';
 import { MatDialogRef } from '@angular/material/dialog';
+import { toArray } from 'rxjs/operators';
 
 @Component({
   selector: 'app-danhmuc-add',
@@ -16,6 +17,7 @@ export class DanhmucAddComponent implements OnInit {
   is_loading = false;
   public subscriptions: Subscription[] = [];
   public danhmucs: DanhMuc[] = [];
+  public danhmucCha: DanhMuc[] = [];
   public frmAdd: FormGroup;
   constructor(
       private danhmucService: DanhmucService,
@@ -25,15 +27,22 @@ export class DanhmucAddComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.createForm();
+        this.createForm();
         this.subscriptions.push(
             this.danhmucService.itemsObs.subscribe(
                 data => {
-                    this.danhmucs = data;
+                    this.danhmucs = data;   
                 },
                 () => {}
             )
         );
+        for (let index = 0; index < this.danhmucs.length; index++) {
+            const element = this.danhmucs[index];     
+            if(!element.danhMuccha){   
+                const peopleArraya =this.danhmucs[index];                            
+                this.danhmucCha.push(peopleArraya); 
+            }  
+        }          
   }
   createForm() {
     this.frmAdd = this._formBuilder.group({
@@ -56,10 +65,10 @@ export class DanhmucAddComponent implements OnInit {
                 Validators.required,
                 Validators.minLength(2),
                 Validators.maxLength(50),
-                Validators.pattern(
-                    '[ a-zA-Z1-9_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶ' +
-                        'ẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợ]*'
-                )
+                // Validators.pattern(
+                //     '[ a-zA-Z1-9_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶ' +
+                //         'ẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợ]*'
+                // )
             ]
         ]
     });

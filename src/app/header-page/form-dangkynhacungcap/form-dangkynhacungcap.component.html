@@ -1,0 +1,102 @@
+<div class="row" >    
+    <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" [ngStyle]="{'background': 'url(' + api_url + '/upload/other/form-img.jpg) no-repeat 0 0 / cover',
+    'background-size':'100% auto'}">   
+        <!-- <img style="width: 150%;" src="{{api_url}}/upload/other/form-img.jpg" alt="">      -->
+    </div>   
+    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="overflow: auto; height: 600px;">
+        <div class="col-lg-12 p-0 mx-0">
+            <span class="title_sp_lq">ĐĂNG KÝ NHÀ CUNG CẤP</span>  
+            <button mat-icon-button  class="ml-2 btn-light" style="position: absolute; right: -10px; top: -10px;" color="warn" (click)="onNoClick()" ><i
+                class="fa fa-window-close font-16pt"></i>
+            </button>        
+        </div>
+        <hr>
+        <form [formGroup]="frmAdd" (ngSubmit)="onSubmitForm()">
+        <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Tên nhà cung cấp</mat-label>
+            <span [ngClass]="onValidatorTextColor('tenNhacungcap')" [innerHTML]="onValidator('tenNhacungcap')" style="float: right; font-size: 10px;"></span>
+            <input matInput formControlName="tenNhacungcap" [ngClass]="onValidatorBorderColor('tenNhacungcap')">
+        </mat-form-field>
+        <!-- <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Địa chỉ</mat-label>
+            <span [ngClass]="onValidatorTextColor('diaChi')" [innerHTML]="onValidator('diaChi')" style="float: right; font-size: 10px;"></span>
+            <input matInput formControlName="diaChi" [ngClass]="onValidatorBorderColor('diaChi')">
+        </mat-form-field> -->
+        <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Số điện thoại</mat-label>
+            <span [ngClass]="onValidatorTextColor('soDienthoai')" [innerHTML]="onValidator('soDienthoai')" style="float: right; font-size: 10px;"></span>
+            <input matInput formControlName="soDienthoai" type="number" [ngClass]="onValidatorBorderColor('soDienthoai')">
+        </mat-form-field>
+        <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Email</mat-label>
+            <span [ngClass]="onValidatorTextColor('email')" [innerHTML]="onValidator('email')" style="float: right; font-size: 10px;"></span>
+            <input matInput formControlName="email" [ngClass]="onValidatorBorderColor('email')">
+        </mat-form-field>
+        <!-- <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Hình ảnh</mat-label>
+            <span [ngClass]="onValidatorTextColor('hinhAnh')" [innerHTML]="onValidator('hinhAnh')" style="float: right; font-size: 10px;"></span>
+            <input matInput formControlName="hinhAnh" [ngClass]="onValidatorBorderColor('hinhAnh')">
+        </mat-form-field> -->
+        <div class="form-group form-inline ">
+            <!-- <span class="text-lg-right px-0 px-lg-3 col-lg-2 col-12"></span> -->
+            <mat-form-field class=" col-lg-6 col-6">
+                <mat-label> Tỉnh (TP) </mat-label>
+                <mat-select [(ngModel)]="tinh" (selectionChange)="onChange($event.value)" formControlName="tinh" >
+                  <!-- <mat-option>None</mat-option> -->
+                  <mat-option  *ngFor="let data of data" [value]="data.name">{{data.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            
+              <mat-form-field class=" col-lg-6 col-6">
+                <mat-label> Quận (Huyện) </mat-label>
+                <mat-select [(ngModel)]="huyensl" formControlName="huyen" (selectionChange)="onChangexa($event.value)" >
+                  <!-- <mat-option >None</mat-option> -->
+                  <mat-option *ngFor="let huyens of huyen" [value]="huyens.name">{{huyens.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class=" col-lg-12 col-12">
+                <mat-label> Thị trấn(phường,xa) </mat-label>
+                <mat-select [(ngModel)]="xasl" formControlName="xa">
+                  <!-- <mat-option >None</mat-option> -->
+                  <mat-option *ngFor="let xas of xa" [value]="xas.prefix+' '+xas.name">{{xas.prefix}} {{xas.name}}</mat-option>
+                </mat-select>
+              </mat-form-field> 
+              <mat-form-field class=" col-lg-12 col-12">                                 
+                 <input matInput formControlName="diaChihome" [(ngModel)]="diaChihome" (input)="changeLocation()" [(ngModel)]="diaChihome" placeholder="Nhập: số nhà - ấp">
+              </mat-form-field> 
+
+              <mat-form-field class=" col-lg-12 col-12">
+                <mat-label> Địa chỉ: </mat-label>
+                <textarea matInput type="text" formControlName="diaChi" value="{{diaChihome}}-{{xasl}}-{{huyensl}}-TP.{{tinh}}" class="col-lg-9 col-12" ></textarea>
+              </mat-form-field>    
+                                                
+        </div>
+        <div class="d-flex flex-row justify-content-between">
+            <label>Hình:</label>
+            <span [ngClass]="onValidatorTextColor('hinhAnh')" [innerHTML]="onValidator('hinhAnh',true)"></span>
+        </div>
+        <div class="d-flex flex-row input-group">
+            <input type="text" class="form-control" name='avatar' [value]='filename'  readonly>
+            <input (change)="onFileChange($event)" type='file'  [hidden]='true' class="form-control"
+                    placeholder="Nhập tên nhà cung cấp " #file />
+            <div class="input-group-append">
+                <button type="button" (click)="file.click()" class="btn btn-primary">Tải lên</button>
+            </div>
+        </div>
+
+        <hr>               
+            <!-- <button class="btn btn-danger registerncc" >Đăng Ký</button> -->
+            <!-- <button class="btn btn-danger">Thoát</button>     -->
+            <div class="d-flex flex-row ">
+                <button type="submit" [disabled]="frmAdd.invalid || is_loading" mat-flat-button color="warn" class="mr-2">
+                    <div class="d-flex justify-content-center position-relative">
+                        <div class="spinner-border text-muted position-absolute" *ngIf="is_loading"></div>
+                        <span> Đăng ký</span>
+                    </div>
+                </button>
+                <button type="reset" mat-stroked-button color="basic">Làm mới</button>
+            </div>
+        </form>     
+    </div>
+    
+</div>

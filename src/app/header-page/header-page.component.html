@@ -1,17 +1,236 @@
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <!-- Brand/logo -->
-    <a class="navbar-brand" href="#">Logo</a>
-    
-    <!-- Links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link 1</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link 2</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link 3</a>
-      </li>
-    </ul>
-  </nav>
+<!-- <ng-container *ngIf="isloaded"> -->
+    <ng-container>
+        <!-- <div class="col-12 d-lg-block d-none  text-center w-100" 
+            
+            [ngStyle]="{'background': 'url(' + api_url + '/upload/other/banertop.png)',
+            'margin-bottom':'0','height':'98px','background-size':'100% 100%'}">
+        </div> -->
+        <div class="sticky-top bg-white shadows">        
+        <div class="container sticky-top bg-white ">
+            <div class="d-flex row" style="height: 4rem">
+                <div class="col-2 mr-auto  d-lg-none d-flex">
+                    <button mat-icon-button class="my-auto" color="warn">
+                        <span class="fas fa-bars" style="font-size: 1.8rem" (click)="onShowMenu()"></span>
+                    </button>
+                    
+                </div>
+                <div class="col-lg-3 d-none d-lg-block align-self-center mx-auto">
+                    <a [routerLink]="['/']" routerLinkActive="router-link-active"
+                        class="w-100 d-flex justify-content-center justify-content-lg-start">
+                        <img src="{{api_url}}/upload/other/logomk2.png" style="    max-height: 3rem;">      
+                    </a>
+                </div>
+                <div class="col-lg-6 d-lg-flex d-none">
+                    <div class="search_form align-self-center w-100 px-lg-5 ">
+                        <div class="input-group" style="max-width: 400px">
+                            <input (keyup)="applyFilterAdd($event.target.value)" [matMenuTriggerFor]="menu2" type="text"
+                                class="form-control" placeholder="Nhập để tìm ..." [(ngModel)]="input_tim">
+                            <div class="input-group-append">
+                                <button class="input-group-text bg-danger text-white" (click)="onSearch()">Tìm
+                                    kiếm</button>
+                            </div>
+                        </div>
+                        <mat-menu #menu2="matMenu" yPosition="below" style="width: 400px">
+                            <ng-template matMenuContent>
+                                <div class="box_tim">
+                                    <table class="table table-hover box_tim">
+                                        <tbody>
+                                            <tr *ngFor="let item of dataSourceSanPham"
+                                                [routerLink]="['/chitietsanpham/',item.id]"
+                                                routerLinkActive="router-link-active">
+                                                <td class="d-flex flex-row p-2 ">
+                                                    <span class="mr-3">
+                                                        <img src="{{api_url}}/upload/sanpham/{{item.hinhAnh}}"
+                                                            style="max-height: 50px;max-width: 50px" alt="">
+                                                    </span>
+                                                    <span class="w-100">
+                                                        {{item.tenSanpham}}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </ng-template>
+                        </mat-menu>
+                    </div>
+                </div>
+                <div class="col-lg-3 col ml-auto d-flex flex-row p-0 justify-content-end">
+                    <div class="box_user_header h-100 px-2 ">
+                        <ng-container *ngIf="!currentUser" >
+                            <span class="btn_user fas fa-user "
+                                style="font-size: 1.5rem;line-height: 4rem;padding: 0 3.1rem;color: #bd2130"></span>
+                        </ng-container>
+                        <ng-container *ngIf="currentUser">
+                            <div class="d-flex align-items-center h-100">
+                                <div class="rounded-circle" style="overflow: hidden ;height: 2rem;width: 2rem">
+                                    <img src="{{api_url}}/upload/user/{{ currentUser.hinh?currentUser.hinh:'no_image.png' }}"
+                                        style="height: 100%;width: 100%" alt="">
+                                </div>
+                                <div class="px-1">
+                                    <span class="text-truncate d-block" style="width: 6.25rem">{{currentUser.hoTen}}</span>
+                                </div>                        
+                            </div>
+                        </ng-container>
+                        <span class="space_white"></span>
+                        <div class="box_info_user bg-white d-flex flex-column">
+                            <!-- <ng-container *ngIf="currentUser;else elseBlock"> -->
+                              <ng-container *ngIf="currentUser">
+                               <div class="w-100 p-2" *ngIf="currentUser.idQuyen==3 && !currentUser.trangThai ">
+                                  <button class="btn btn-default py-0 px-0"
+                                      routerLinkActive="router-link-active">
+                                      <span ><img src="{{api_url}}/upload/other/upgrade.png" alt="" width="25%"></span>
+                                      <span class="ml-2" (click)="onDknhacungcap()" style="float: left;color: #bd2130; font-weight: bold;">Nâng cấp quyền</span></button>
+                              </div>
+                              <div class="w-100 p-2" *ngIf="currentUser.idQuyen==3 && currentUser.trangThai ">
+                                  <button class="btn btn-default py-0 px-0" 
+                                      routerLinkActive="router-link-active">
+                                      <span ><img src="{{api_url}}/upload/other/loading.gif" alt="" width="35%"></span>
+                                      <span class="ml-2" style="float: left;color: #bd2130; font-weight: bold;">Đang xét duyệt</span></button>
+                              </div>
+                              
+                                <div class="w-100 p-2">
+                                    <button [routerLink]="['/profile']" routerLinkActive="router-link-active"
+                                        class="btn btn-default py-0 px-0"><span class="fa fa-user"></span><span
+                                            class="name_profile ml-2 ">Thông tin</span></button>
+                                </div>
+                                <div class="w-100 p-2" *ngIf="currentUser.idQuyen==2">
+                                    <button [routerLink]="['/profile-ncc']" routerLinkActive="router-link-active"
+                                            class="btn btn-default py-0 px-0"><span class="fa fa-user"></span><span
+                                                class="name_profile ml-2 ">Thông tin NCC</span></button>
+                                </div>
+                                <div class="w-100 p-2" *ngIf="currentUser.idQuyen==1 || currentUser.idQuyen==2">
+                                    <button class="btn btn-default py-0 px-0" [routerLink]="['/admin']"
+                                        routerLinkActive="router-link-active">
+                                        <span class="fa fa-cog"></span>
+                                        <span class="ml-2">Trang quản trị</span></button>
+                                </div>
+                                <!-- <div class="w-100 p-2" *ngIf="currentUser.idQuyen==2">
+                                    <button class="btn btn-default py-0 px-0" [routerLink]="['/admin']"
+                                        routerLinkActive="router-link-active">
+                                        <span class="fa fa-cog"></span>
+                                        <span class="ml-2">Trang quản trị</span></button>
+                                </div>                          -->
+                                <div class="w-100 p-2">
+                                    <button (click)="onLogout()" class="btn btn-default py-0 px-0"><span
+                                            class="fa fa-power-off"></span><span class=" ml-2">Đăng xuất</span></button>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="!currentUser">
+                                <div class=" p-3 ">
+                                    <img src="{{api_url}}/upload/other/img_login3.png" style="width: 100%;" alt="">
+                                </div>
+                                <div class="d-flex flex-row justify-content-between">
+                                    <button class="btn btn-secondary bg-white text-secondary btn-sm"
+                                        (click)="onDangKy()">Đăng ký</button>
+                                    <button class="btn btn-danger btn-sm" (click)="onDangNhap()">Đăng
+                                        nhập</button>
+                                </div>
+                            </ng-container>
+      
+      
+                        </div>
+                    </div>
+                    <div class="box_cart_header px-4 d-flex">
+                        <div class="btn_cart align-self-center ">
+                            <button matBadge="{{countCarts}}" matBadgeOverlap="true" mat-icon-button color="accent"
+                                style="font-size: 1.5rem;position: relative">
+                                <i class="fa fa-cart-arrow-down  " style="color:#bd2130">
+                                </i>
+      
+                            </button>
+                        </div>
+                        <span class="space_white"></span>
+                        <div class="box_info_cart bg-white pt-2">                    
+                          <app-menu-cart></app-menu-cart>
+                            <div class="d-flex flex-column bg-khoi3 p-3 pt-0">
+                                <a [routerLink]="['/giohang']" routerLinkActive="router-link-active"><span
+                                        class="btn btn-danger w-100">Xem giỏ
+                                        hàng</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="my_nav">
+            <div class="container">
+                <div class="row menu_home ">
+                    <div class="col-lg-3 pl-0">
+                        <div class="col-lg-12 text-center p-0 text-white bg-white box_danhmuc_nav d-none d-lg-block"
+                            style="position: relative">
+                            <div class="title-menu-bar">
+                                <span class="fa fa-bars mr-2"></span><span>DANH MỤC  </span>
+                            </div>
+                            <!-- <div class="my_menucontent shadow bg-white" [ngClass]="{'show': isShow}"> -->
+                                <div class="my_menucontent shadow bg-white">
+                                <ul class="site-nav d-flex flex-column h-100 overflow-hidden">
+                                    <li class="py-auto text-dark p-0" *ngFor="let dm of danhmucs ;let i=index">
+                                        <div class="p-3">
+                                            <div (click)="onClickDanhMuc(dm)">
+                                                <span class="{{dm.hinh}}" style="width: 1.25rem"></span>
+                                                <label class=" m-0 ml-2 "> {{ dm?.tenDanhmuc }}</label>
+                                            </div>
+      
+                                            <div class="submenu hidden-md-down shadow" style="z-index: 999">
+                                                <ul class="menu-list-cate2 p-0">
+                                                    <div class="row row-noGutter">
+                                                        <div class="col-md-4 text-xs-left"
+                                                            *ngFor="let item of getsub_danhmuc(dm?.id,6)">
+                                                            <ul class="text-left">
+                                                                <button class="font-weight-bold" style="font-size: 1rem"
+                                                                    mat-button
+                                                                    (click)="onClickDanhMuc(item)">{{item?.tenDanhmuc}}</button>
+                                                                <li *ngFor="let item2 of getsub_danhmuc(item?.id,4)"
+                                                                    (click)="onClickDanhMuc(item2)">
+                                                                    <a class="text-secondary " mat-button>
+                                                                        {{ item2?.tenDanhmuc }}
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="text-danger" mat-button
+                                                                        style="font-size: 1rem">Xem tất
+                                                                        cả<i class="" aria-hidden="true"></i></a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <mat-divider *ngIf="i!=7"></mat-divider>
+                                    </li>
+      
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 p-0">
+                        <ul class="nav my_ul d-flex justify-content-around overflow-auto flex-row flex-nowrap">
+                            <li class="nav-item  d-lg-none ">
+                                <a class="nav-link text-light" [routerLink]="['/']" routerLinkActive="router-link-active">
+                                    <i class="fas fa-home"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link text-light" [routerLink]="['/khuyenmai']"
+                                    routerLinkActive="router-link-active">KHUYẾN MÃI</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" [routerLink]="['/about']"
+                                    routerLinkActive="router-link-active">GIỚI THIỆU</a>
+                            </li>
+                            <li class="nav-item d-none d-lg-block">
+                                <a class="nav-link text-light" [routerLink]="['/contact']"
+                                    routerLinkActive="router-link-active">LIÊN HỆ</a>
+                            </li>  
+      
+                        </ul>
+                    </div>
+                    <div class="col-lg-4 d-flex flex-row pt-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+      </ng-container>

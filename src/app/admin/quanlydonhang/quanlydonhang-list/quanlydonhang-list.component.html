@@ -1,0 +1,60 @@
+<div class="d-flex flex-row justify-content-between px-md-0 pb-3 px-3">
+    <div class=" ml-auto">
+        <input class="form-control" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </div>
+</div>
+<div class="card">
+    <div class="card-header m_color_primary  text-center">
+        <span class="page-header my_title font-weight-lighter">{{title}}
+        </span>
+    </div>
+    <button mat-icon-button [matMenuTriggerFor]="menu" style="position: absolute; right: 0px;" class="text-white">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="onExpand()">
+            <span *ngIf="!expand">
+                <i class="fas fa-expand-arrows-alt "></i> Mở rộng
+            </span>
+            <span *ngIf="expand">
+                <i class="fas fa-compress-arrows-alt"></i> Thu gọn
+            </span>
+        </button>
+    </mat-menu>
+    <div class="card-body p-0 overflow-auto">
+        <mat-tab-group mat-align-tabs="start" animationDuration="0ms">
+            <mat-tab label="Chưa xử lí">
+                <div class="p-2">
+                    <app-quanlydonhang-tab [idtab]="1"></app-quanlydonhang-tab>
+                </div>
+
+            </mat-tab>
+            <mat-tab label="Đã thanh toán">
+                <div class="p-2">
+                    <app-quanlydonhang-tab [idtab]=6></app-quanlydonhang-tab>
+                </div>
+            </mat-tab>
+            <mat-tab label="Đã đóng gói">
+                <div class="p-2">
+                    <app-quanlydonhang-tab [idtab]="2"></app-quanlydonhang-tab>
+                </div>
+            </mat-tab>
+            <mat-tab label="Đang giao">
+                <div class="p-2">
+                    <app-quanlydonhang-tab [idtab]="3"></app-quanlydonhang-tab>
+                </div>
+            </mat-tab>
+            <mat-tab label="Đã giao">
+                <div class="p-2">
+                    <app-quanlydonhang-tab [idtab]="4"></app-quanlydonhang-tab>
+                </div>
+            </mat-tab>
+            <mat-tab label="Đã hủy">
+                <div class="p-2">
+                    <app-quanlydonhang-tab [idtab]=5></app-quanlydonhang-tab>
+                </div>
+            </mat-tab>
+
+        </mat-tab-group>
+    </div>
+</div>

@@ -55,11 +55,12 @@ export class SanphamService {
                     this.itemsSub.value.push(res['data']);
                     this.itemsSub.next(this.itemsSub.value);
                     this.thongbaoService.open('Thêm thành công!', 'bg-success');
+                    this.getAll();
                 }
             },
             () => {},
             () => this.isLoadingSub.next(false)
-        );
+        );        
     }
     delete(value) {
         const url = `${this.API}/${value.id}`;
@@ -100,6 +101,7 @@ export class SanphamService {
                             'Cập nhật thành công!',
                             'bg-success'
                         );
+                        this.getAll();
                     }
                 }
             },

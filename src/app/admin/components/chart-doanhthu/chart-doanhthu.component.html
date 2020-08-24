@@ -1,0 +1,24 @@
+<div class="card">
+    <div class="card-header d-flex flex-row justify-content-center  "
+        [ngClass]="{'m_color_primary text-center': thugon}">
+        <div class="col-3 mr-auto">
+            <mat-select class="form-control text-left " (selectionChange)="onChangeThang()" placeholder="Chọn tháng"
+                [(ngModel)]="month">
+                <mat-option *ngFor="let item of [1,2,3,4,5,6,7,8,9,10,11,12]" [value]="item-1">
+                    Tháng {{item}}
+                </mat-option>
+            </mat-select>
+        </div>
+        <div>
+            BIỂU ĐỒ DOANH THU
+        </div>
+
+    </div>
+    <div class="card-body ">
+        <mat-progress-bar *ngIf="isLoading" mode="indeterminate" class="example-tree-progress-bar">
+        </mat-progress-bar>
+        <fusioncharts [width]="width" [height]="height" [type]="type" [dataFormat]="dataFormat"
+            [dataSource]="dataSource">
+        </fusioncharts>
+    </div>
+</div>

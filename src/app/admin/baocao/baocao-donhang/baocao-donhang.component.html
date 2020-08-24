@@ -1,0 +1,120 @@
+<div class="card" style="border-top:none">
+    <div class="card-header" [ngClass]="{'m_color_primary text-center': thugon}">
+        <span *ngIf="thugon" class="font-16pt   text-white">Danh sách đơn hàng tháng này</span>
+        <form *ngIf="!thugon" [formGroup]="frmBaoCao1" (ngSubmit)="onBaoCao()"
+            class="d-flex flex-wrap align-items-center p-0">
+            <div class=" px-2">
+                <mat-form-field>
+                    <mat-label>Từ ngày</mat-label>
+                    <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="NgayBD">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class=" px-2">
+                <mat-form-field>
+                    <mat-label>Đến ngày</mat-label>
+                    <input matInput [matDatepicker]="picker2" placeholder="Choose a date" formControlName="NgayKT">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="px-2">
+                <button type="submit" mat-raised-button color="primary" [disabled]="frmBaoCao1.invalid">Xem</button>
+            </div>
+        </form>
+    </div>
+    <div class="card-body p-0 overflow-auto">
+        <mat-progress-bar *ngIf="isLoading" mode="indeterminate" class="example-tree-progress-bar">
+        </mat-progress-bar>
+        <div class="col-12 p-0 " style="max-height: 500px; overflow:auto">
+            <table [ngClass]="{'d-none': isLoading}" mat-table [dataSource]="dataSource" class="w-100 p-0" matSort
+                matSortActive="updated_at" matSortDirection="desc">
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+                    <td mat-cell *matCellDef="let element; let i =index"> {{i+1}} </td>
+                    <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+                <ng-container matColumnDef="TongTien">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Tổng tiền </th>
+                    <td mat-cell *matCellDef="let element" class="text-right">
+                        {{ element.total| currency:"VND":'symbol'}} </td>
+                    <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+                <ng-container matColumnDef="NguoiNhan">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Người nhận </th>
+                    <td mat-cell *matCellDef="let element" class="text-left"> {{element.NguoiNhan}} </td>
+                    <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+
+                <ng-container matColumnDef="DiaChi">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Địa chỉ </th>
+                    <td mat-cell *matCellDef="let element" class="text-left"> {{element.DiaChi}} </td>
+                    <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+                <ng-container matColumnDef="DienThoai">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Điện thoại </th>
+                    <td mat-cell *matCellDef="let element" class="text-right"> {{element.DienThoai}} </td>
+                    <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+                <!-- <ng-container matColumnDef="idTrangThai">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng thái </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-form-field>
+                            <mat-select [disabled]="true" [value]=element.idTrangThai [(ngModel)]="element.idTrangThai"
+                                (selectionChange)="onChangeTrangThai(element)">
+                                <mat-option *ngFor="let item of trangthais" [value]=item?.id>
+                                    {{item?.Ten}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef class=" font-14pt">Tổng: </td>
+                </ng-container> -->
+                <ng-container matColumnDef="idUser">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>User </th>
+                    <td mat-cell *matCellDef="let element" class="text-left"> {{element.UserName}} </td>
+                    <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+
+                <ng-container matColumnDef="idDiaDiem">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Địa Điểm </th>
+                    <td mat-cell *matCellDef="let element" class="text-left"> {{element.idDiaDiem}}
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+
+                <ng-container matColumnDef="LiDo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Lí do</th>
+                    <td mat-cell *matCellDef="let element" class="text-left"> {{element.LiDo}} </td>
+                    <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+                <ng-container matColumnDef="created_at">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Created_at </th>
+                    <td mat-cell *matCellDef="let element"> {{element.created_at | date:'d-MM-yyyy'}} </td>
+
+                    <td mat-footer-cell *matFooterCellDef class=" font-14pt text-success">
+                        {{getTotal() | currency:'VND':'symbol'}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="updated_at">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Updated_at </th>
+                    <td mat-cell *matCellDef="let element"> {{element.updated_at | date:'d-MM-yyyy'}} </td>
+                    <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+                    <td mat-cell *matCellDef="let element">
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+                <tr mat-footer-row *matFooterRowDef="columnsToDisplay;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[10, 20,50] " showFirstLastButtons></mat-paginator>
+
+        </div>
+    </div>
+</div>

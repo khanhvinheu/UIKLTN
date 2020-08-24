@@ -27,7 +27,7 @@
         <mat-label>Khuyến mãi</mat-label>
         <mat-select formControlName="idKhuyenMai">
             <ng-container *ngIf="khuyenmais">
-                <mat-option [value]="1">null</mat-option>
+                <mat-option [value]="null">null</mat-option>
                 <mat-option *ngFor="let khuyenmai of khuyenmais" [value]="khuyenmai.id">
                     {{khuyenmai.tieuDe}}
                 </mat-option>

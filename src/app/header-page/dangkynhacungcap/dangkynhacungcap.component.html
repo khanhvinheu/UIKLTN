@@ -1,0 +1,58 @@
+<mat-horizontal-stepper labelPosition="bottom" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <!-- <ng-template matStepLabel>Fill out your name</ng-template> -->
+        <div class="row" >    
+          <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" [ngStyle]="{'background': 'url(' + api_url + '/upload/other/tmdt.png) no-repeat 0 0 / cover',
+          'background-size':'auto 100%'}">           
+              <!-- <img style="width: 150%;" src="{{api_url}}/upload/other/form-img.jpg" alt="">      -->
+          </div>   
+          <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="height: 500px;">
+              <div class="col-lg-12 p-0 mx-0">
+                  <span class="title_sp_lq">LỜI MỜI CỘNG TÁC</span>          
+              </div>
+              <hr>
+              <hr>
+              <div class="btn_next">
+                <button mat-button matStepperNext>Tiếp tục</button>
+              </div>
+          </div>
+          
+      </div>
+      
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" >
+      <form [formGroup]="secondFormGroup">
+        <!-- <ng-template matStepLabel>Fill out your address</ng-template> -->
+        <div class="row" >    
+          <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" [ngStyle]="{'background': 'url(' + api_url + '/upload/other/nh.jpg) no-repeat 0 0 / cover',
+          'background-size':'auto 100%'}">   
+              <!-- <img style="width: 150%;" src="{{api_url}}/upload/other/form-img.jpg" alt="">      -->
+          </div>   
+          <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="height: 450px;">
+              <div class="col-lg-12 p-0 mx-0">
+                  <span class="title_sp_lq">MỘT SỐ QUY ĐỊNH</span>          
+              </div>
+              <hr>            
+              <hr>
+              <div class="btn_next">
+                <button mat-button matStepperPrevious>Quay lại</button>
+                <button mat-button matStepperNext>Tiếp tục</button>
+              </div>
+          </div>
+          
+      </div>
+      </form>
+    </mat-step>
+    
+    <mat-step>
+      <!-- <ng-template matStepLabel>Done</ng-template>       -->
+      <app-form-dangkynhacungcap></app-form-dangkynhacungcap>
+      <div>
+          
+        <!-- <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button> -->
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>

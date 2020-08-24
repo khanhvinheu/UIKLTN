@@ -1,0 +1,109 @@
+<div class="d-flex flex-column flex-lg-row p-0">
+    <div class="card col-12 col-lg mat-elevation-z1">
+        <div class="card-body p-0 p-md-3">
+            <div class="col text-center d-flex justify-content-center align-items-center p-3 flex-wrap"
+                style="font-size: 1.5rem">
+                <div class="text-danger col-12">Đánh giá tổng quan</div>
+                <span class="text-warning mx-3">
+                    {{get_DiemTrungBinh() | number:'0.1-2'}}
+                    <i class="fas fa-star "></i>
+                </span>
+                <span class="mx-3">|</span>
+                <div class="mx-3 text-danger">
+                    <span class="fas fa-user"></span> {{ get_CountDanhGia() }}
+                </div>
+            </div>
+            <div class="col d-flex -flex-column justify-content-around">
+                <div class="row rating-desc w-100">
+                    <ng-container *ngFor="let i of [5,4,3,2,1]">
+                        <div class="col-3 col-md-2 text-left">
+                            <span class="fas fa-star text-warning"></span>{{i}}
+                        </div>
+                        <div class="col-9">
+                            <div class="progress progress-striped">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20"
+                                    aria-valuemin="0" aria-valuemax="100" [style.width.%]="get_TiLeDanhGia(i)">
+                                    <span class="">
+                                        {{ get_TiLeDanhGia(i) | number:'0.1-2' }}%
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card col-lg-5 col-12 p-0 ml-lg-2 mt-2 mt-lg-0  mat-elevation-z1" *ngIf="canRate">
+        <div class="card-header h-100">
+            <form [formGroup]="frm" (ngSubmit)="onSubmitForm()">
+                <span class="font-weight-bold" style="font-size: 1.3rem ">Viết đánh giá</span>
+                <div class="d-flex flex-row py-2">
+                    <span class="mr-auto" style="font-size: 1rem">Đánh giá</span>
+                    <ngb-rating [(rate)]="currentRate" max="5" formControlName="Diem">
+                        <ng-template let-fill="fill" let-index="index">
+                            <span class="fas fa-star mystar" [class.filled]="fill === 100"></span>
+                        </ng-template>
+                    </ngb-rating>
+
+                    <div>
+                        <input type="hidden" class="rating rating_diem" data-filled="fas fa-star fa-1x text-warning"
+                            data-empty="far fa-star fa-1x text-warning" value="5" data-step="1" />
+                    </div>
+                </div>
+                <textarea class="form-control rating_content" cols="30" rows="4" placeholder="Viết nội dung đánh giá"
+                    formControlName="NoiDung"></textarea>
+                <div class="py-2 d-flex">
+                    <button class="btn btn-danger ml-auto btn_send_danhgia">Gửi</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<div class="box_row_danhgia">
+</div>
+<div class="d-flex  w-100">
+    <div class="spinner-border text-success mx-auto invisible box_spiner_loading"></div>
+</div>
+<div class="card  my-4  mat-elevation-z1 overflow-hidden border-0" *ngFor="let item of ratings">
+    <div class="card-header d-flex flex-row px-1  p-md-2  align-items-center text-white"
+        style="background: #1976d2 !important">
+        <div class="p-0 mr-2">
+            <img *ngIf="item?.idTaikhoan" src="{{api_url}}/upload/user/{{ item?.hinh?item.hinh:'no_image.png'}}"             
+                class="rounded-circle" style="width:2rem;height: 2rem;">
+        </div>
+        <div class="d-flex flex-column">
+            <span class="text-truncate" style="font-size: 1.1rem;line-height: 2rem;font-size: 1rem;max-width: 7rem">
+                {{item?.hoTen |titlecase}}
+            </span>
+
+        </div>
+        <i class="ml-auto mr-2" style="line-height: 2rem;font-size: 0.7rem">{{ item.updated_at  }}</i>
+        <!-- <div style="line-height: 2rem;">
+            <input style="line-height: 2rem;" type="hidden" class="rating " data-filled="fas fa-star fa-1x text-warning"
+                data-empty="far fa-star fa-1x text-warning" data-readonly value="" />
+        </div> -->
+        <div style="width: 30px">
+            <div class=" menu_delete d-flex flex-row" *ngIf="duocxoa(item)">
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <span class="fas fa-ellipsis-v "></span>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button class="w-100 text-center" mat-menu-item (click)="onDeleteDanhGia(item)">Xóa</button>
+
+                </mat-menu>
+            </div>
+        </div>
+    </div>
+    <div class="card-body d-flex flex-row">
+        <div class="d-flex flex-column">
+            <ngb-rating [(rate)]="item.Diem" max="5" [readonly]="true">
+                <ng-template let-fill="fill" let-index="index">
+                    <span class="fas fa-star " [class.filled]="fill === 100"></span>
+                </ng-template>
+            </ngb-rating>
+            <span style="font-size: 1rem">{{ item?.NoiDung }}</span>
+        </div>
+    </div>
+</div>

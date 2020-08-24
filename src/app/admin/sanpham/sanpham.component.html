@@ -1,0 +1,198 @@
+<div class="d-flex flex-wrap w-100">
+    <div class="col-md-3 col-12 py-3  px-0 pr-md-4 pl-md-0 " *ngIf="expandDanhMuc">
+        <div class="card">
+            <div class="card-header m_color_primary text-center">
+                <span class="page-header font_size_3 font-weight-lighter my_title">DANH MỤC
+                </span>
+            </div>
+            <!-- <button mat-icon-button [matMenuTriggerFor]="menuDanhMuc" aria-label="Example icon-button with a menu"
+                style="position: absolute; right: 0px;" class="text-white">
+                <mat-icon>more_vert</mat-icon>
+            </button> -->
+            <!-- <mat-menu #menuDanhMuc="matMenu">
+                <button mat-menu-item (click)="onOpenThemDanhMuc()">
+                    Thêm Danh Mục
+                </button>
+            </mat-menu> -->
+            <div class="card-body p-0 p-md-3">
+                <mat-tree [dataSource]="dataSourceDanhMuc" [treeControl]="treeControl" class="example-tree">
+                    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+                        <li class="mat-tree-node">
+                            <button mat-icon-button disabled></button>
+                            <button mat-button (click)='danhMucFilter(node)'> {{node.name}}</button>
+                        </li>
+                    </mat-tree-node>
+                    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                        <li>
+                            <div class="mat-tree-node">
+                                <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+                                    <mat-icon class="mat-icon-rtl-mirror">
+                                        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                    </mat-icon>
+                                </button>
+                                <button mat-button (click)='danhMucFilter(node)'> {{node.name}}</button>
+                            </div>
+                            <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">
+                                <ng-container matTreeNodeOutlet></ng-container>
+                            </ul>
+                        </li>
+                    </mat-nested-tree-node>
+                </mat-tree>
+            </div>
+        </div>
+    </div>
+    <div class="col-md col-12 py-3 px-0 overflow-auto">
+        <div class="card ">
+            <div class="card-header m_color_primary text-center">
+                <span class="page-header my_title font-weight-lighter">SẢN PHẨM
+                </span>
+            </div>
+            <button mat-icon-button [matMenuTriggerFor]="menu" class="text-white"
+                aria-label="Example icon-button with a menu" style="position: absolute; right: 0px;">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="onExpand()">
+                    <span *ngIf="!expand">
+                        <i class="fas fa-expand-arrows-alt "></i> Mở rộng
+                    </span>
+                    <span *ngIf="expand">
+                        <i class="fas fa-compress-arrows-alt"></i> Thu gọn
+                    </span>
+                </button>
+                <button mat-menu-item (click)="onExpandDanhMuc()">
+                    <span *ngIf="!expandDanhMuc">
+                        <i class="fas fa-eye"></i> Hiện danh mục
+                    </span>
+                    <span *ngIf="expandDanhMuc">
+                        <i class="fas fa-eye-slash"></i> Ẩn danh mục
+                    </span>
+                </button>
+            </mat-menu>
+            <div class="card-body">
+                <div class="d-flex flex-row ">
+                    <div>
+                        <button type="button" mat-raised-button color="primary" class="" (click)='onAdd()'><i
+                                class="fa fa-plus" aria-hidden="true"></i> Add new</button>
+                    </div>
+                    <div class="form-group ml-auto">
+                        <input class="form-control" placeholder="Filter" (keyup)='applyFilter($event.target.value)'>
+                    </div>
+                </div>
+                <div class="d-block overflow-auto">
+                    <mat-progress-bar *ngIf="isLoading" mode="indeterminate" class="example-tree-progress-bar">
+                    </mat-progress-bar>
+                    <table mat-table [dataSource]="dataSource" class="w-100 mat-elevation-z8" matSort
+                        [trackBy]="trackByFn">
+                        <ng-container matColumnDef="id">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+                            <td mat-cell *matCellDef="let element; let i =index"> {{i+1}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="tenSanpham">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Tên </th>
+                            <td mat-cell *matCellDef="let element" class="text-left"> {{element.tenSanpham}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Hinh">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Hình </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="m-2">
+                                    <img class="img_sanpham" src="{{api_url}}/upload/sanpham/{{element.hinhAnh}}" alt="">
+                                </div>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="MoTa">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Mô Tả </th>
+                            <td mat-cell *matCellDef="let element" class="text-left">
+                                {{element?.moTa |textTruncate:0:20 }} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="ThongTin">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Thông tin </th>
+                            <td mat-cell *matCellDef="let element" class="text-left">
+                                {{element?.thongTin |textTruncate:0:20}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Gia">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Giá </th>
+                            <td mat-cell *matCellDef="let element" class="text-left"> {{element?.gia | currency:'VND':'symbol'}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="SoLuong" >
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Số lượng </th>
+                            <td mat-cell *matCellDef="let element" class="text-right">
+                                <mat-chip-list #chipList aria-label="Fruit selection" >
+                                    <mat-chip *ngIf="element?.soLuong"  color="primary" selected [selectable]="selectable"
+                                             [removable]="removable">
+                                             {{element?.soLuong}}                                       
+                                    </mat-chip>
+                                    <mat-chip *ngIf="!element?.soLuong"  color="warn" selected [selectable]="selectable"
+                                             [removable]="removable" >
+                                             Hết hàng    
+                                        <button mat-icon-button color="black" type="button"
+                                        (click)="onAddproduct(element)"><i class="fa fa-plus font-16pt"></i></button>                                  
+                                    </mat-chip>
+                                  </mat-chip-list>
+                            </td>                            
+                        </ng-container>                        
+                        <ng-container matColumnDef="KhuyenMai">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Khuyến Mãi </th>
+                            <td mat-cell *matCellDef="let element" class="text-left">                                
+                                    <mat-chip-list #chipList aria-label="Fruit selection" >
+                                      <mat-chip *ngIf="element?.tieuDe"  color="warn" selected [selectable]="selectable"
+                                               [removable]="removable" (removed)="remove(element)">
+                                               {{element?.tieuDe}} 
+                                        <mat-icon matChipRemove >cancel</mat-icon>
+                                      </mat-chip>
+                                      <mat-chip *ngIf="!element?.tieuDe"  color="primary" selected [selectable]="selectable"
+                                               [removable]="removable" (removed)="addKhuyenmai(element)">
+                                               Thêm 
+                                        <mat-icon matChipRemove ><i class="fa fa-plus" ></i></mat-icon>
+                                      </mat-chip>
+                                    </mat-chip-list>
+                            </td>
+                        </ng-container>   
+                                             
+                        <ng-container matColumnDef="idDanhMuc">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Danh mục </th>
+                            <td mat-cell *matCellDef="let element" class="text-left"> {{element?.tenDanhmuc}} </td>
+                        </ng-container> 
+                        <ng-container matColumnDef="Show">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Ẩn / hiện </th>
+                            <td mat-cell *matCellDef="let element" class="text-left">
+                                 <mat-slide-toggle style="position: sticky" [checked]="true"></mat-slide-toggle>
+                            </td>
+                            
+                        </ng-container>                       
+                        <ng-container matColumnDef="created_at">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Created_at </th>
+                            <td mat-cell *matCellDef="let element"> {{element?.created_at}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="updated_at">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Updated_at </th>
+                            <td mat-cell *matCellDef="let element"> {{element?.updated_at}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="action" stickyEnd>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="d-flex flex-row justify-content-center ">
+                                    <button mat-icon-button type="button" class="font-15pt" color="primary"
+                                        (click)='onEdit(element)'><i class="fas fa-edit"></i></button>
+                                    <button mat-icon-button type="button" class="font-15pt " color="warn"
+                                        (click)="onDelete(element)"><i class="fas fa-trash-alt"></i></button>
+                                    <button mat-icon-button color="accent" type="button"
+                                        (click)="onAddImage(element)"><i class="far fa-images font-16pt"></i></button>
+                                    <!-- Add sl sanpham -->
+                                    <button mat-icon-button color="accent" type="button"
+                                        (click)="onAddproduct(element)"><i class="fa fa-plus font-16pt"></i></button>
+                                </div>
+
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                        <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[10, 20,50] " showFirstLastButtons></mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

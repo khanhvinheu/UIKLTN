@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
-import { LoginAdminComponent } from './login-admin/login-admin.component';
 import { DemoMaterialModule } from './material-module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoginAdminModule } from './login-admin/login-admin.module';
 import { MatDialogModule } from '@angular/material/dialog';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { DanhMucComponent } from './danh-muc/danh-muc.component';
 import { DanhmucAddComponent } from './danh-muc/danhmuc-add/danhmuc-add.component';
@@ -28,12 +26,102 @@ import { KhuyenmaiEditComponent } from './khuyenmai/khuyenmai-edit/khuyenmai-edi
 import { ChitietkhuyenmaiComponent } from './chitietkhuyenmai/chitietkhuyenmai.component';
 import { ChitietkhuyenmaiCreateComponent } from './chitietkhuyenmai/chitietkhuyenmai-create/chitietkhuyenmai-create.component';
 import { ChitietkhuyenmaiEditComponent } from './chitietkhuyenmai/chitietkhuyenmai-edit/chitietkhuyenmai-edit.component';
+import { SanphamComponent } from './sanpham/sanpham.component';
+import { ImageAddComponent } from './sanpham/image-add/image-add.component';
+import { SanphamAddComponent } from './sanpham/sanpham-add/sanpham-add.component';
+// import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { CKEditorModule } from 'ng2-ckeditor';
+import { ShareModule } from '../share/share.module';
+import { SanphamEditComponent } from './sanpham/sanpham-edit/sanpham-edit.component';
+import { NhacungcapModule } from './nhacungcap/nhacungcap.module';
+import { TaikhoanModule } from './taikhoan/taikhoan.module';
+import { TokenInterceptor } from '../auth/intercreptors/token.intercreptor';
+import { MyHelper } from '../helper/MyHelper';
+import { PageRoutingModule } from '../page/page-routing.module';
+import { QuanlydonhangModule } from './quanlydonhang/quanlydonhang.module';
+import { AddKhuyenmaiComponent } from './sanpham/add-khuyenmai/add-khuyenmai.component';
+import { BaocaoModule } from './baocao/baocao.module';
+import { ChartTopSanphamComponent } from './components/chart-top-sanpham/chart-top-sanpham.component';
+import { ChartDoanhthuComponent } from './components/chart-doanhthu/chart-doanhthu.component';
+import { FusionChartsModule } from 'angular-fusioncharts';
+import { BaocaoService } from './service/baocao.service';
+import { ConfirmDialogService } from './service/confirm-dialog.service';
+import * as FusionCharts from 'fusioncharts';
+import * as Charts from 'fusioncharts/fusioncharts.charts';
+import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+import * as UmberTheme from 'fusioncharts/themes/fusioncharts.theme.umber';
+import * as GammelTheme from 'fusioncharts/themes/fusioncharts.theme.gammel';
+import { DanhgiaComponent } from './danhgia/danhgia.component';
+import { NhaphangComponent } from './sanpham/nhaphang/nhaphang.component';
+import { NhasanxuatModule } from './nhasanxuat/nhasanxuat.module';
 
 
-
+// Add dependencies to FusionChartsModule
+FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme, UmberTheme, GammelTheme)
 @NgModule({
-  declarations: [  
-    LoginAdminComponent, 
+  declarations: [ 
+    
+     DanhMucComponent,
+     DanhmucAddComponent, 
+     DanhmucListComponent, 
+     DanhmucEditComponent, 
+     QuyenComponent, 
+     QuyenCreateComponent,
+     QuyenEditComponent, 
+     DanhmuchinhComponent,
+     DanhmuchinhCreateComponent,
+     DanhmuchinhEditComponent, 
+     DashboardComponent, 
+     PhuongthucthanhtoanComponent, 
+     PtttCreateComponent, 
+     PtttEditComponent, 
+     KhuyenmaiComponent, 
+     KhuyenmaiCreateComponent, 
+     KhuyenmaiEditComponent, 
+     ChitietkhuyenmaiComponent, 
+     ChitietkhuyenmaiCreateComponent, 
+     ChitietkhuyenmaiEditComponent, 
+     SanphamComponent, 
+     ImageAddComponent, 
+     SanphamAddComponent,
+     SanphamEditComponent,
+     AddKhuyenmaiComponent,
+     ChartTopSanphamComponent,
+     ChartDoanhthuComponent,
+     DanhgiaComponent,
+     NhaphangComponent,
+       
+  
+  ],
+  imports: [
+    CommonModule,
+    AdminRoutingModule,
+    DemoMaterialModule,
+    FormsModule,    
+    MatDialogModule,
+    HttpClientModule,
+    FormsModule,RouterModule,
+    CommonModule,  
+    ReactiveFormsModule,  
+    CKEditorModule,
+    ShareModule, 
+    NhacungcapModule,
+    TaikhoanModule ,    
+    PageRoutingModule,
+    HttpClientModule,
+    QuanlydonhangModule,
+    BaocaoModule,
+    FusionChartsModule,
+    NhasanxuatModule
+  ],
+  providers:[
+    MyHelper,
+    BaocaoService,
+    ConfirmDialogService,
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+  ],
+
+  entryComponents: [
     DanhMucComponent,
      DanhmucAddComponent, 
      DanhmucListComponent, 
@@ -48,22 +136,23 @@ import { ChitietkhuyenmaiEditComponent } from './chitietkhuyenmai/chitietkhuyenm
      PhuongthucthanhtoanComponent, 
      PtttCreateComponent, 
      PtttEditComponent, 
-     KhuyenmaiComponent, KhuyenmaiCreateComponent, KhuyenmaiEditComponent, ChitietkhuyenmaiComponent, ChitietkhuyenmaiCreateComponent, ChitietkhuyenmaiEditComponent, 
-  
+     KhuyenmaiComponent, 
+     KhuyenmaiCreateComponent, 
+     KhuyenmaiEditComponent, 
+     ChitietkhuyenmaiComponent, 
+     ChitietkhuyenmaiCreateComponent, 
+     ChitietkhuyenmaiEditComponent, 
+     SanphamComponent, 
+     ImageAddComponent, 
+     SanphamAddComponent,
+     SanphamEditComponent,
+     AddKhuyenmaiComponent,
+     ChartTopSanphamComponent,
+     ChartDoanhthuComponent,
+     DanhgiaComponent,
+     NhaphangComponent
   ],
-  imports: [
-    CommonModule,
-    AdminRoutingModule,
-    DemoMaterialModule,
-    FormsModule,
-    LoginAdminModule,
-    MatDialogModule,
-    HttpClientModule,
-    FormsModule,RouterModule,
-    CommonModule,  
-    ReactiveFormsModule,
-  
-    
-  ]
+   
+
 })
 export class AdminModule { }

@@ -1,0 +1,128 @@
+<ul class="container nav nav-tabs pt-5">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#tab_profile">Thông tin</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#tab_lichsu">Lịch sử mua hàng</a>
+    </li>
+
+</ul>
+<!-- Tab panes -->
+<div class="tab-content">
+    <div class="tab-pane container active py-5" id="tab_profile">
+        <div class="row">
+            <div class="col-12 col-lg-4">
+                <div class="d-flex flex-column justify-content-between ">
+                    <div class=" border rounded box_image d-flex justify-content-center"
+                        style="width: 100%;height: 350px">
+                        <img src="{{api_url}}/upload/user/{{currentUser.hinh?currentUser.hinh:'no_image.png'}}"
+                            style="max-width: 100% ;max-height: 100%;object-fit: contain" alt="">
+                    </div>
+                    <form class="form_upload" method="post">
+                        <label class="btn btn-info w-100" for="upload-photo">Cập nhật ảnh đại diện</label>
+                        <input type="file" class="d-none" name="Hinh" id="upload-photo"
+                            (change)="onChangeHinh($event)" />
+                    </form>
+                    <button class="btn btn-info w-100" (click)="onDoiMatKhau()">Đổi mật
+                        khẩu</button>
+                </div>
+
+            </div>
+            <div class="col-lg-8 col-12 pt-3 pt-lg-0">
+                <div class="card h-100">
+                    <div class="card-header">
+                        Thông tin cá nhân
+                    </div>
+                    <div class="card-body">
+                        <form class="d-flex flex-column h-100" [formGroup]="frm" (ngSubmit)="onSubmitForm()">
+                            <div class="form-group form-inline">
+                                <span class="text-lg-right px-0 px-lg-3 col-lg-2 col-12">Email:</span>
+                                <input type="text" class="form-control col-lg-9 col-12" formControlName="email">
+                            </div>
+                            <div class="form-group form-inline">
+                                <span class="text-lg-right px-0 px-lg-3 col-lg-2 col-12">Họ tên:</span>
+                                <input type="text" formControlName="hoTen" class="form-control col-lg-9 col-12" id="">
+                            </div>                            
+                            <div class="form-group form-inline">
+                                <span class="text-lg-right px-0 px-lg-3 col-lg-2 col-12">Giới tính:</span>
+                                <mat-select class="form-control col-lg-9 col-12 text-left" [disabled]="isShow"                                   
+                                     placeholder="Chọn giới tính"  formControlName="gioiTinh">
+                                     <mat-option value="Nam">Nam</mat-option>
+                                     <mat-option value="Nữ">Nữ</mat-option>
+                                     <mat-option value="Khác">Khác..</mat-option>
+                                </mat-select>
+                            </div>
+                            
+                            <div class="form-group form-inline">
+                                <span class="text-lg-right px-0 px-lg-3 col-lg-2 col-12">Điện thoại:</span>
+                                <input type="text" formControlName="dienThoai" class="form-control col-lg-9 col-12">
+                            </div>
+                            <div class="form-group form-inline">
+                                <span class="text-lg-right px-0 px-lg-3 col-lg-2 col-12">Ngày sinh:</span>
+                                <mat-form-field class="col-lg-9 col-12 text-left">
+                                    <input matInput [matDatepicker]="picker"  formControlName="ngaySinh" [disabled]="isShow" >
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                                                 
+                            <div class="form-group form-inline ">
+                                <span class="text-lg-right px-0 px-lg-3 col-lg-2 col-12"></span>
+                                <mat-form-field class=" col-lg-4 col-12">
+                                    <mat-label> Tỉnh (TP) </mat-label>
+                                    <mat-select [(ngModel)]="tinh" (selectionChange)="onChange($event.value)" formControlName="tinh" [disabled]="isShow">
+                                      <mat-option>None</mat-option>
+                                      <mat-option  *ngFor="let data of data" [value]="data.name">{{data.name}}</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                
+                                  <mat-form-field class=" col-lg-5 col-12">
+                                    <mat-label> Quận (Huyện) </mat-label>
+                                    <mat-select [(ngModel)]="huyensl" formControlName="huyen" (selectionChange)="onChangexa($event.value)" [disabled]="isShow">
+                                      <mat-option >None</mat-option>
+                                      <mat-option *ngFor="let huyens of huyen" [value]="huyens.name">{{huyens.name}}</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                                                    
+                            </div>
+                            <div class="form-group form-inline ">
+                                <span class="text-lg-right px-0 px-lg-3 col-lg-2 col-12"></span>                               
+                                  <mat-form-field class=" col-lg-4 col-12">
+                                    <mat-label> Thị trấn(phường,xa) </mat-label>
+                                    <mat-select [(ngModel)]="xasl" formControlName="xa" (selectionChange)="onChangevaluexa()" [disabled]="isShow">
+                                      <mat-option >None</mat-option>
+                                      <mat-option *ngFor="let xas of xa" [value]="xas.prefix+' '+xas.name">{{xas.prefix}} {{xas.name}}</mat-option>
+                                    </mat-select>
+                                  </mat-form-field> 
+                                  <mat-form-field class=" col-lg-5 col-12">                                 
+                                  <input matInput formControlName="diaChihome" (input)="changeLocation()" [(ngModel)]="diaChihome" placeholder="Nhập: số nhà - ấp">
+                                </mat-form-field>                               
+                            </div>
+                            <div class="form-group form-inline ">
+                                <span class="text-lg-right px-0 px-lg-3 col-lg-2 col-12">Địa chỉ:</span>  
+                                <mat-form-field class=" col-lg-9 col-12">
+                                    <textarea matInput type="text" formControlName="diaChi"  class="col-lg-9 col-12" ></textarea>
+                                </mat-form-field>                              
+                            </div>     
+                            <div class="form-group d-flex justify-content-center mt-auto mb-1">
+                                <ng-container *ngIf="!isShow">
+                                    <button type=" submit" class="btn btn-sm btn-info mr-2 ">Lưu</button>
+                                    <button t class="btn btn-sm btn-outline-secondary"
+                                        (click)="onToggleShow()">Hủy</button>
+                                </ng-container>
+                                <button *ngIf="isShow" class="btn btn-sm btn-info btn_edit_profile"
+                                    (click)="onToggleShow()">Chỉnh sửa</button>
+                            </div>  
+                                                
+                           
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane container fade py-5 px-1 px-md-3" id="tab_lichsu">      
+        <app-lichsumuahang></app-lichsumuahang>
+    </div>
+</div>

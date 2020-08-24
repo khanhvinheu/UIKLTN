@@ -1,0 +1,81 @@
+<!-- <mat-progress-bar *ngIf="is_loading " mode="indeterminate" class="example-tree-progress-bar">
+</mat-progress-bar>
+<ngx-slick-carousel #slickModal="slick-carousel" [config]="slideConfig"  class="d-flex flex-row py-2 overflow-hidden">
+   
+</ngx-slick-carousel> -->
+<div  class="col-lg-3  col-md-4 col-6 px-1 px-md-2 box_item" *ngFor="let item of nhacungcap" style="float: left;">
+    <div class="py-3">
+        <div class="card box-item_slide text-center p-2  mat-elevation-z3">
+            <div [routerLink]="['/chitietnhacungcap',+item.id]" routerLinkActive="router-link-active"
+                class="box_img d-flex justify-content-center p-2 " style='height: 180px;overflow: auto'>
+                <img class="card-img-top w-100 h-100 " src="{{api_url}}/upload/sanpham/{{ item?.hinhAnh }}"
+                    alt="Card image">
+            </div>
+            <div class="card-content">
+                <a class="text-decoration-none">
+                    <span
+                        class="card_title text-center text-secondary text-truncate d-block mx-auto w-90">{{ item.tenNhacungcap }}
+                    </span>
+                </a> 
+            </div>
+            <div class="card-content">
+                <a class="text-decoration-none">
+                    <span
+                        class="card_title text-center text-secondary text-truncate d-block mx-auto w-90">{{(( item.diaChi).toString()).split("-").reverse()[0] }}
+                    </span>
+                </a> 
+            </div>
+            
+            <div class="box_btn_mua_hidden ">
+                <div class="bg-dark h-100 w-100"></div>
+                <div class="d-flex h-100">
+                    <div class="d-flex flex-row mx-auto align-self-center box_btn_ct" style="z-index: 1">
+                        <button class="btn btn-danger mr-2 btn_themnhanh" 
+                            [disabled]="item?.soLuong ===0" [routerLink]="['/search']" [queryParams]="{nsx: item?.id}"  routerLinkActive="router-link-active">Sản Phẩm</button>
+        
+                        <a class="btn btn-light mr-2"[routerLink]="['/chitietnhacungcap',+item.id]" routerLinkActive="router-link-active">Chi tiết</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="col-lg-3 col-6 col-md-4 p-0 box_item d-flex"  *ngFor="let item of nhacungcap" style="float: right;">
+    <div class="card box-item text-center  w-100  mat-elevation-z1" >
+        <div [routerLink]="['/chitietnhacungcap',+item.id]" routerLinkActive="router-link-active"
+        class="box_img d-flex justify-content-center p-2 " style='height: 180px;overflow: hidden'>
+        <img class="card-img-top w-100 h-100 " src="{{api_url}}/upload/sanpham/{{ item?.hinhAnh }}"
+            alt="Card image">
+        </div>
+        <div class="card-content p-2">
+            <a class="text-decoration-none">
+                <span
+                    class="card_title text-center text_color_1 d-block text-truncate mx-auto w-90 font-weight-bold">
+                    {{ item.tenNhacungcap |titlecase}}
+                </span>
+            </a>           
+            
+        </div>
+        <div class="card-content">
+            <a class="text-decoration-none">
+                <span
+                    class="card_title text-center text-secondary text-truncate d-block mx-auto w-90">{{ item.diaChi }}
+                </span>
+            </a> 
+        </div>
+    </div>
+    <div class="box_btn_mua_hidden ">
+        <div class="bg-dark h-100 w-100"></div>
+        <div class="d-flex h-100">
+            <div class="d-flex flex-row mx-auto align-self-center box_btn_ct" style="z-index: 1">
+                <button class="btn btn-danger mr-2 btn_themnhanh" (click)="onAddCart(item)"
+                    [disabled]="item?.SoLuongTon ===0">Mua</button>
+
+                <a class="btn btn-light mr-2" [routerLink]="['/chitietsanpham/'+item.id]"
+                    routerLinkActive="router-link-active">Xem</a>
+            </div>
+        </div>
+    </div>
+</div> -->
+

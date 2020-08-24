@@ -1,0 +1,70 @@
+<div class="py-2">
+    <span class="text-danger font-weight-bold" style="font-size: 1.3rem">{{ 'Bộ Lọc Tìm Kiếm ' | uppercase }}</span>
+</div>
+<hr>
+<div class="">
+    <div>
+        <span class="font-weight-bolder" style='font-size: 1rem;text-transform: uppercase'>Sắp xếp </span>
+        <div class="d-flex flex-wrap ">
+            <mat-radio-group class="text-right" aria-label="Select an option" [(ngModel)]="sort1"
+                (change)=onChangeSort_param() ngDefaultControl>
+                <mat-radio-button class="col-md-6 col-12 m-0" value="1">A-Z</mat-radio-button>
+                <mat-radio-button class="col-md-6 col-12 m-0" value="2">Z-A</mat-radio-button>
+                <mat-radio-button class="col-md-6 col-12 m-0" value="3">Old</mat-radio-button>
+                <mat-radio-button class="col-md-6 col-12 m-0" value="4">New</mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <span class="font-weight-bold" style='font-size: 1rem;text-transform: uppercase'>Chọn mục</span>
+
+        <div class="d-flex flex-wrap py-3 pl-3 box_danhmuc">
+            <div class="col-12 m-0 p-0">
+                <mat-checkbox [(ngModel)]="checked" (change)="onChangeAll($event,findDanhMuc(0))">All</mat-checkbox>
+            </div>
+            <div class=" col-md-6 col-12 m-0 p-0" *ngFor="let item of findDanhMuc(0)">
+                <mat-checkbox type="checkbox" value="{{ item.id }}" (change)="onCheck_param($event,item.id)">
+                    {{ item.tenDanhmuc }}</mat-checkbox>
+            </div>
+        </div>
+        <div class="my_box_hidden d-none">
+            <div class="d-none d-flex flex-wrap py-3 pl-3   box_subdanhmuc">
+
+            </div>
+            <div class=" d-none d-flex flex-wrap py-3 pl-3  box_subdanhmuc2">
+
+            </div>
+
+        </div>
+    </div>
+
+    <hr>
+    <div>
+        <span class="font-weight-bold" style='font-size: 1rem;text-transform: uppercase'>Chọn nhà cung cấp</span>
+        <div class="d-flex flex-wrap p-3 box_hang">
+
+            <div class="form-check-inline col-md-12 col-12 m-0 p-0" *ngFor="let item of nhacungcaps">
+                <mat-checkbox [checked]="onKiemTra_Hang(item)" type="checkbox" value="{{ item.id }}"
+                    (change)="onCheckedHang_param($event,item.id)">
+                    {{ item.tenNhacungcap }}</mat-checkbox>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div>
+        <span class="font-weight-bold" style='font-size: 1rem;text-transform: uppercase'>Chọn mức giá</span>
+        <div class="d-flex flex-wrap p-3">
+
+            <mat-radio-group aria-label="Select an option" [(ngModel)]="sort_gia" (change)=onChangeSort_gia()
+                ngDefaultControl>
+                <mat-radio-button class="col-12 m-0 px-0" value="1">Dưới 1 triệu</mat-radio-button>
+                <mat-radio-button class="col-12 m-0 px-0" value="2">1 triệu - 3 triệu</mat-radio-button>
+                <mat-radio-button class="col-12 m-0 px-0" value="3">Trên 3 triệu</mat-radio-button>
+            </mat-radio-group>
+
+        </div>
+    </div>
+</div>

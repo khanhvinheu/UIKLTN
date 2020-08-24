@@ -1,0 +1,66 @@
+<div class="col-12 d-flex flex-row row_cart">
+    <div class="col-lg-2 col-4">
+        <div class="wrapper_img" style="max-width: 100px;max-height: 100px">
+            <img *ngIf="findSanPham(item?.idSanPham)?.hinhAnh"
+                src="{{api_url}}/upload/sanpham/{{ findSanPham(item?.idSanPham)?.hinhAnh }}"
+                style="width: 100%;height: auto" alt="">
+        </div>
+    </div>
+    <div class="col-lg-7 col-8 d-flex flex-column">
+        <span class="name_sp">
+            <h4>{{ findSanPham(item.idSanPham)?.tenSanpham |uppercase }}</h4>
+        </span>
+        <!-- <span class="info_sp">{{ findSanPham(item.idSanPham)?.TenNSX |titlecase }}</span> -->
+        <ng-container *ngIf="findSanPham(item.idSanPham)?.SoLuongTon === 0 ;else elseBlock">
+            <span class="card-cost">Hết hàng</span>
+        </ng-container>
+        <ng-template #elseBlock>
+            
+            <div class="flex-row" *ngIf="findSanPham(item.idSanPham)?.chietKhau > 0">
+                <span
+                    class="card_old_cost text-center">{{findSanPham(item.idSanPham)?.gia | currency:'VND':'symbol'}}</span>
+                <span class="card_label_km btn btn-sm btn-danger p-0 ">
+                    -{{ (findSanPham(item.idSanPham)?.chietKhau)| number:'1.0-1' }}%
+                </span>
+            </div>
+            <span class="card-cost">
+                {{ findSanPham(item.idSanPham)?.gia - (findSanPham(item.idSanPham)?.gia *  findSanPham(item.idSanPham)?.chietKhau/100) | currency:'VND':'symbol'}}
+            </span>
+        </ng-template>
+        <div class="d-flex  d-lg-none">
+            <div class="row input-group  mt-auto p-0 m-0">
+                <span class="input-group-prepend">
+                    <button type="button" class="btn btn-danger btn-number" (click)="onMinus()">
+                        <span class="fa fa-minus"></span>
+                    </button>
+                </span>
+                <input class="form-control input-number text-center " type="text" [(ngModel)]="item.SoLuong"
+                    (change)="onChangeInput()">
+                <span class="input-group-append">
+                    <button type="button" class="btn btn-success btn-number" (click)="onPlus()">
+                        <span class="fa fa-plus"></span>
+                    </button>
+                </span>
+            </div>
+            <button class="btn fa fa-trash color-khoi2  mt-auto mr-2 " (click)="onDeleteRow(item)"></button>
+        </div>
+    </div>
+    <div class="col-lg-3 p-0 d-lg-flex flex-row d-none">
+        <span class="btn fa fa-trash color-khoi2 mt-auto mr-2 " aria-hidden="true" style="font-size: 1.5rem"
+            (click)="onDeleteRow(item)"></span>
+        <div class="row input-group  mt-auto p-0 m-0">
+            <span class="input-group-prepend">
+                <button type="button" class="btn btn-danger btn-number" (click)="onMinus()">
+                    <span class="fa fa-minus"></span>
+                </button>
+            </span>
+            <input class="form-control input-number text-center " type="text" [(ngModel)]="item.SoLuong"
+                (change)="onChangeInput()" type="number">
+            <span class="input-group-append">
+                <button type="button" class="btn btn-success btn-number" (click)="onPlus()">
+                    <span class="fa fa-plus"></span>
+                </button>
+            </span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+<div class="d-flex flex-md-row flex-column py-2">
+    <div class="col-md-4 col-12 my-2 px-0 px-md-2">
+        <div class="card">
+            <div class="card-header">
+                <span>Thông tin giao hàng:</span>
+            </div>
+            <div class="card-body">
+                <div>
+                    <p><span class="font-weight-bold mr-2">Người nhận: </span> {{ frm1?.NguoiNhan }}
+                    </p>
+                    <p><span class="font-weight-bold mr-2">Địa chỉ:</span>{{frm1?.DiaChi}}
+                    </p>
+                    <p><span class="font-weight-bold mr-2">Điện thoại:</span> {{frm1?.DienThoai}}</p>
+                    <p><span class="font-weight-bold mr-2">Phương thức TT :</span> {{phuongthucs[frm2?.phuongthuctt]}}
+                    </p>
+                </div>
+                <!-- <button mat-raised-button color="warn" class="p-2 w-100" (click)="onSubmitThanhToan()">Đặt hàng</button> -->
+            </div>
+        </div>
+        <div class="card">
+            <hr>
+            <div class="card-body">
+                <div>
+                    <p class="tongtien"><span class="font-weight-bold mr-2 ">Tổng tiền: </span> {{loadthanhtien() | currency:'VND':'symbol'}}</p>  
+                    <p class="tongtien"><span class="font-weight-bold mr-2 ">Phí giao hàng: </span> {{15000 | currency:'VND':'symbol'}}</p>    
+                    <hr>
+                    <p class="tongtien"><span class="font-weight-bold mr-2 ">Tổng tiền phải trả: </span> {{loadthanhtien()+15000| currency:'VND':'symbol'}}</p> 
+
+                </div>
+                <button *ngIf="phuongthucs[frm2?.phuongthuctt]=='Thanh toán Online'" mat-raised-button color="warn" class="p-2 w-100" (click)="onSubmitPayment()">Thanh toán Online</button>
+                <button *ngIf="phuongthucs[frm2?.phuongthuctt]=='COD'" mat-raised-button color="warn" class="p-2 w-100" (click)="onSubmitThanhToan()">Đặt hàng</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 col-12 my-2 px-0 px-md-1">
+        <div class="card">
+            <div class="card-header">
+                Chi tiết
+            </div>
+            <div class="card-body  p-0 d-flex justify-content-around" style="max-height: 400px;overflow-y: auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="d-none">STT</th>
+                            <th>Sản phẩm</th>
+                            <th>Hình</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of carts; let i=index">
+                            <td class="d-none">
+                                {{i+1}}
+                            </td>
+                            <td>{{ findSanPham(item.idSanPham)?.tenSanpham |titlecase}}</td>
+                            <td>
+                                <div class="wrapper_img" style="max-width: 4rem;max-height: 4rem">
+                                    <img *ngIf="findSanPham(item.idSanPham)"
+                                        src="{{api_url}}/upload/sanpham/{{ findSanPham(item.idSanPham)?.hinhAnh }}"
+                                        style="width: 100%;height: auto" alt="">
+                                </div>
+                            </td>
+                            <td>{{item.SoLuong}}</td>
+                            <td class="dongia">
+                                <span  style="text-decoration: line-through;">{{ findSanPham(item.idSanPham)?.gia  | currency:'VND':'symbol'}} </span>
+                                <br>
+                                <span >{{findSanPham(item.idSanPham)?.gia - (findSanPham(item.idSanPham)?.gia* findSanPham(item.idSanPham)?.chietKhau )/100| currency:'VND':'symbol'}} </span>
+                            </td>
+                            
+                        </tr>
+                    </tbody>
+                    <!-- <tfoot>
+                        <tr>
+                            <th class="d-none"></th>
+                            <th></th>
+                            <th></th>
+
+                            <th>Tổng tiền: </th>
+                            <th>{{loadthanhtien() | currency:'VND':'symbol'}}</th>
+                        </tr>
+                    </tfoot> -->
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

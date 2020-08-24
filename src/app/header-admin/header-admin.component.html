@@ -4,25 +4,25 @@
           [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
           <div class="d-flex flex-row bg-info align-items-center" style="height: 64px;">
               <span class="mx-2 rounded-circle overflow-hidden">
-                  <img style="height: 40px;width: 40px" src="" alt="">
-              </span>
-              <span class="text-white" style="line-height: 40px">Hi: KV </span>
+                  <img style="height: 40px;width: 40px" src="{{api_url}}/upload/user/{{currentUser.hinh?currentUser.hinh:'no_image.png'}}" alt="">
+              </span>             
+              <span class="text-white" style="line-height: 40px">{{currentUser.hoTen}} </span>
           </div>
           <mat-nav-list>
 
-              <a class="text-white teal" mat-list-item routerLink="." *ngFor="let nav of fillerNav"
+              <a class="text-white teal" mat-list-item routerLink="." *ngFor="let nav of menu"
                   [routerLink]="['/admin/',nav.link]" routerLinkActive="router-link-active">
                   <i class="nav-icon fa fa-list-alt mr-3" style="color: #73818f"></i>
-                  <span *ngIf="nav.name=='Hóa đơn xuất';else elseBlock" [matBadge]="getCountDH()" matBadgeColor="warn"
-                      matBadgeOverlap="false">{{nav.name}}</span>
-                  <ng-template #elseBlock>
-                      <span>{{nav.name}}</span>
+                  <span *ngIf="nav.name=='Quản lý đơn hàng';else elseBlock" [matBadge]="getCountDH()" matBadgeColor="warn"
+                      matBadgeOverlap="false">{{nav.name}} </span>
+                  <ng-template  #elseBlock>
+                      <span>{{nav.name}} </span>
                   </ng-template>
                   <!-- <mat-divider class="bg-secondary"></mat-divider> -->
               </a>
               <mat-divider class="bg-secondary"></mat-divider>
               <a class="text-white teal" mat-list-item (click)="onLogout()">
-                  <i class="fas fa-sign-out-alt mr-3" style="color: #73818f"></i> Log out
+                  <i class="fas fa-sign-out-alt mr-3" style="color: #73818f"></i> Đăng xuất
               </a>
           </mat-nav-list>
 

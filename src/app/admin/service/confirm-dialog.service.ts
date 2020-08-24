@@ -26,4 +26,19 @@ export class ConfirmDialogService {
             });
         return status;
     }
+    async openDialogwr() {
+        let status = false;
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+            data: 'Bạn thật sự muốn xóa nhà cung cấp?',           
+        });
+        await dialogRef
+            .afterClosed()
+            .toPromise()
+            .then(result => {
+                if (result) {
+                    status = true;
+                }
+            });
+        return status;
+    }
 }

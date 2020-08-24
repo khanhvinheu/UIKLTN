@@ -1,0 +1,21 @@
+<form [formGroup]="frmEdit" (ngSubmit)="onSubmitForm()">
+    <div class="form-group">
+        <div class="d-flex flex-row justify-content-between">
+            <label>Tên:</label>
+            <span [ngClass]="onValidatorTextColor('Ten')" [innerHTML]="onValidator('Ten')"></span>
+        </div>
+
+        <input [ngClass]="onValidatorBorderColor('Ten')" class="form-control" name="Ten"
+            placeholder="Nhập tên nhà sản xuất" formControlName="Ten" />
+    </div>
+    <div class="d-flex flex-row">
+        <button type="submit" [disabled]="frmEdit.invalid || is_loading" mat-flat-button color="warn" class="mr-2">
+            <div class="d-flex justify-content-center position-relative">
+                <div class="spinner-border text-muted position-absolute" *ngIf="is_loading"></div>
+                <span> Cập nhật</span>
+            </div>
+        </button>
+        <button type="reset" mat-stroked-button color="basic">Làm mới</button>
+
+    </div>
+</form>
